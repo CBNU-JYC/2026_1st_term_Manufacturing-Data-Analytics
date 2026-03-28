@@ -43,7 +43,6 @@
 |---|---|---|---|
 | `3rd_project_0317` | 제조 데이터 정제 및 품질 검증 실습 | `clean_dataset.py`, `Explain_clean_dataset.py`, `expected_qa.md` | `labeled_data_clean.csv` |
 | `3rd_homework_0331` | SECOM 데이터셋 품질 확보 과제 본 제출본 | `secom_quality_clean.py`, `z_explanation_secom_quality_clean.py` | `cleaned_secom_data.csv` |
-| `z_3rd_homework_0331` | SECOM 데이터셋 보조 정제/설명 버전 | `clean_uci-secom_dataset.py`, `z_explanation_clean_uci-secom_dataset.py`, `z_explanation2_clean_uci-secom_dataset.py` | `cleaned_secom_data.csv` |
 | `4th_project_0324/4th_practice/opcua_basic` | OPC-UA 기본 통신 및 제조 센서 수집 | `opc_server.py`, `opc_client.py`, `opc_server_mfg.py`, `opc_client_mfg.py` | `manufacturing_sensor_data.csv` |
 | `4th_project_0324/4th_practice/data_pipeline` | 제조 데이터 수집-정제-검증 파이프라인 | `data_pipeline.py`, `data_pipeline_check.py`, `opc_server_mfg.py` | `raw_sensor_dataset.csv`, `verified_sensor_dataset.csv`, `lifecycle_optimized_dataset.csv` |
 | `4th_project_0324/4th_practice/information_model` | OPC UA 정보 모델 심화 실습 | `advanced_server.py`, `advanced_client.py` | 정보 모델 실습 로그 및 호출 결과 |
@@ -69,13 +68,7 @@
   - MDQI 관점의 품질 점수 계산 및 출력
 - `z_explanation_secom_quality_clean.py`는 같은 로직을 학습용 주석과 함께 정리한 설명 버전입니다.
 
-### 3. `z_3rd_homework_0331`
-
-- SECOM 데이터셋을 조금 더 간단한 형태로 정제한 보조 스크립트 모음입니다.
-- `clean_uci-secom_dataset.py`는 결측률 기반 컬럼 제거, 중앙값 보간, 상수 센서 제거, 라벨 포맷 정리, IQR 기반 이상치 보정을 수행합니다.
-- 설명 파일 두 개는 같은 과정을 단계별로 이해할 수 있도록 정리한 참고용 버전입니다.
-
-### 4. `4th_project_0324`
+### 3. `4th_project_0324`
 
 - `opcua_basic`: OPC-UA 서버/클라이언트 연결과 제조 센서 데이터 수집 실습
 - `data_pipeline`: 원천 데이터 수집부터 검증/최적화 데이터셋 생성까지의 파이프라인 실습
@@ -195,12 +188,6 @@ ManDA_Lecture/
 │   ├── z_explanation_secom_quality_clean.py
 │   ├── uci-secom.csv
 │   └── cleaned_secom_data.csv
-├── z_3rd_homework_0331/
-│   ├── clean_uci-secom_dataset.py
-│   ├── z_explanation_clean_uci-secom_dataset.py
-│   ├── z_explanation2_clean_uci-secom_dataset.py
-│   ├── uci-secom.csv
-│   └── cleaned_secom_data.csv
 ├── 4th_project_0324/
 │   └── 4th_practice/
 │       ├── opcua_basic/
@@ -220,4 +207,3 @@ ManDA_Lecture/
 ## 강의 자료 링크
 
 - 충북대학교 EISN: <https://eisn.cbnu.ac.kr/nxui/index.html?OBSC_YN=0&LNG=ko#main>
-
