@@ -8,7 +8,7 @@
 
 충북대학교 산업인공지능학 전공 `제조 데이터 분석과 최적화` 강의의 실습 코드, 과제, 설명용 스크립트, 생성 데이터셋을 정리한 저장소입니다.
 
-이 저장소는 제조 데이터 품질 정제, OPC-UA 통신 실습, 데이터 파이프라인 구축, 정보 모델 실습, SECOM 반도체 공정 데이터 과제를 주차별로 관리하는 것을 목표로 합니다.
+이 저장소는 제조 데이터 품질 정제, OPC-UA 통신 실습, 데이터 파이프라인 구축, 정보 모델 실습, 예지보전 분류 과제, MVTec 이상 탐지 프로젝트를 주차별로 관리하는 것을 목표로 합니다.
 
 ## 저장소 정보
 
@@ -36,6 +36,8 @@
 - 데이터 수집-정제-검증 파이프라인 구현
 - OPC UA 정보 모델 심화 실습
 - SECOM 반도체 공정 데이터셋 품질 확보 과제
+- AI4I 2020 기반 제조 설비 고장 분류 모델 개선
+- MVTec AD 기반 오토인코더 이상 탐지 프로젝트
 
 ## 프로젝트 구성
 
@@ -46,6 +48,9 @@
 | `4th_project_0324/4th_practice/opcua_basic` | OPC-UA 기본 통신 및 제조 센서 수집 | `opc_server.py`, `opc_client.py`, `opc_server_mfg.py`, `opc_client_mfg.py` | `manufacturing_sensor_data.csv` |
 | `4th_project_0324/4th_practice/data_pipeline` | 제조 데이터 수집-정제-검증 파이프라인 | `data_pipeline.py`, `data_pipeline_check.py`, `opc_server_mfg.py` | `raw_sensor_dataset.csv`, `verified_sensor_dataset.csv`, `lifecycle_optimized_dataset.csv` |
 | `4th_project_0324/4th_practice/information_model` | OPC UA 정보 모델 심화 실습 | `advanced_server.py`, `advanced_client.py` | 정보 모델 실습 로그 및 호출 결과 |
+| `5th_homework_0407` | AI4I 2020 예지보전 데이터셋 기반 개선 분류 과제 | `improved_model.py`, `z_explanation_improved_model.py` | `evaluation_result.png`, `results.json`, `models/` |
+| `5th_project_0331/5th_practice_numerical` | 수치형 제조 데이터 기반 예지보전 실습 | `fault_diagnosis_mlp.pth`, `best_lstm_ae.pth` 외 실습 결과물 | 학습 모델, 임곗값 분석 그래프, 재구성 오차 시각화 |
+| `6th_project_0407/mvtec` | MVTec AD bottle 클래스 기반 오토인코더 이상 탐지 프로젝트 | `step1_data_eda.py`, `step2_train.py`, `step3_evaluate.py` | `autoencoder_model.pth`, 평가용 시각화 및 데이터셋 |
 
 ## 주요 과제 및 실습 요약
 
@@ -73,6 +78,20 @@
 - `opcua_basic`: OPC-UA 서버/클라이언트 연결과 제조 센서 데이터 수집 실습
 - `data_pipeline`: 원천 데이터 수집부터 검증/최적화 데이터셋 생성까지의 파이프라인 실습
 - `information_model`: 고급 OPC UA 정보 모델 서버/클라이언트 실습
+
+### 4. `5th_homework_0407`
+
+- AI4I 2020 Predictive Maintenance 데이터셋을 사용해 제조 설비 고장 여부를 분류하는 개선 모델 과제입니다.
+- `improved_model.py`는 데이터 전처리, 클래스 불균형 대응, MLP 학습, 최적 threshold 탐색, 성능 평가를 포함합니다.
+- `z_explanation_improved_model.py`는 동일 로직을 학습용 설명과 함께 정리한 주석 강화 버전입니다.
+- 결과물로 `evaluation_result.png`, `results.json`, `models/improved_mlp.pth`, `models/improved_scaler.pkl`, `models/optimal_threshold.pkl`을 저장합니다.
+
+### 5. `6th_project_0407`
+
+- MVTec AD `bottle` 클래스 데이터를 사용해 비지도 이상 탐지 오토인코더를 학습하고 평가하는 프로젝트입니다.
+- `step1_data_eda.py`는 데이터 구조 확인과 이미지 분포 탐색을 담당합니다.
+- `step2_train.py`는 정상 이미지를 기반으로 오토인코더를 학습하고 `autoencoder_model.pth`를 저장합니다.
+- `step3_evaluate.py`는 재구성 오차를 이용해 이상 여부를 판별하고 평가를 수행합니다.
 
 ## 빠른 시작
 
@@ -168,6 +187,42 @@ cd 4th_project_0324/4th_practice/data_pipeline
 python data_pipeline_check.py
 ```
 
+### 6. AI4I 2020 개선 모델 과제 실행
+
+```bash
+cd 5th_homework_0407
+python improved_model.py
+```
+
+실행 결과:
+
+- `ai4i2020.csv`를 읽어 전처리 및 학습 수행
+- 최적 threshold 기반 평가 결과 계산
+- `evaluation_result.png`, `results.json`, `models/` 산출물 저장
+
+### 7. MVTec 오토인코더 프로젝트 실행
+
+데이터 탐색:
+
+```bash
+cd 6th_project_0407/mvtec
+python step1_data_eda.py
+```
+
+학습:
+
+```bash
+cd 6th_project_0407/mvtec
+python step2_train.py
+```
+
+평가:
+
+```bash
+cd 6th_project_0407/mvtec
+python step3_evaluate.py
+```
+
 ## 현재 저장소 구조
 
 ```text
@@ -193,6 +248,21 @@ ManDA_Lecture/
 │       ├── opcua_basic/
 │       ├── data_pipeline/
 │       └── information_model/
+├── 5th_homework_0407/
+│   ├── improved_model.py
+│   ├── z_explanation_improved_model.py
+│   ├── ai4i2020.csv
+│   ├── evaluation_result.png
+│   ├── results.json
+│   └── models/
+├── 5th_project_0331/
+│   └── 5th_practice_numerical/
+├── 6th_project_0407/
+│   └── mvtec/
+│       ├── step1_data_eda.py
+│       ├── step2_train.py
+│       ├── step3_evaluate.py
+│       └── autoencoder_model.pth
 ├── secom_clean.csv
 ├── .gitignore
 └── README.md
@@ -202,7 +272,7 @@ ManDA_Lecture/
 
 - 설명용 파일(`Explain_*.py`, `z_explanation_*.py`)은 원본 코드 학습을 돕기 위한 주석 강화 버전입니다.
 - 생성 CSV는 실습 결과 확인과 후속 분석을 위해 저장소에 함께 보관합니다.
-- Python 캐시 파일(`__pycache__`, `*.pyc`)은 버전 관리 대상에서 제외합니다.
+- Python 캐시와 개발 환경 파일(`__pycache__`, `*.pyc`, `.cache/`, `.matplotlib/`, `.vscode/`, `.idea/`)은 버전 관리 대상에서 제외합니다.
 
 ## 강의 자료 링크
 
