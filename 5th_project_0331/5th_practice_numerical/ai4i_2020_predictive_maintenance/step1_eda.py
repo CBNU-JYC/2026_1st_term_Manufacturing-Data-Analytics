@@ -1,13 +1,16 @@
 import os
+import json
 import pandas as pd
 import numpy as np
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
+RESULTS_DIR = BASE_DIR / "results"
 os.environ.setdefault("MPLCONFIGDIR", str(BASE_DIR / ".matplotlib"))
 os.environ.setdefault("XDG_CACHE_HOME", str(BASE_DIR / ".cache"))
 (BASE_DIR / ".matplotlib").mkdir(parents=True, exist_ok=True)
 (BASE_DIR / ".cache").mkdir(parents=True, exist_ok=True)
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -73,4 +76,13 @@ plt.close()
 failure_modes = ['TWF', 'HDF', 'PWF', 'OSF', 'RNF']
 print("세부 고장 유형별 발생 건수:")
 print(df[failure_modes].sum())
+summary = {
+    "dataset_shape": list(df.shape),
+    "failure_ratio_percent": {str(k): float(v) for k, v in failure_ratio.to_dict().items()},
+    "failure_mode_counts": {k: int(v) for k, v in df[failure_modes].sum().to_dict().items()},
+}
+(RESULTS_DIR / "step1_eda_summary.json").write_text(
+    json.dumps(summary, ensure_ascii=False, indent=2),
+    encoding="utf-8",
+)
 print("\nEDA 완료! 이미지 3개가 저장되었습니다.")

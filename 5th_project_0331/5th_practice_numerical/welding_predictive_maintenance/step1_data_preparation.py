@@ -1,10 +1,13 @@
 import pandas as pd
 import numpy as np
 import torch
+import json
 from sklearn.preprocessing import MinMaxScaler
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
+RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 print("1. 데이터 로딩 중...", flush=True)
 normal = pd.read_csv(BASE_DIR / 'normal_data.csv', index_col=0)
@@ -87,3 +90,15 @@ torch.save({
     'X_test': torch.FloatTensor(X_test), 'Y_test': torch.FloatTensor(Y_test), 'Y_te_index': Y_te_index
 }, BASE_DIR / 'processed_dataset.pt')
 print("데이터셋 준비 완료! (processed_dataset.pt 생성)", flush=True)
+
+summary = {
+    "train_shape": list(X_train.shape),
+    "valid_shape": list(X_valid.shape),
+    "test_shape": list(X_test.shape),
+    "sequence_length": sequence,
+    "features": use_col,
+}
+(RESULTS_DIR / "step1_data_preparation_summary.json").write_text(
+    json.dumps(summary, ensure_ascii=False, indent=2),
+    encoding="utf-8",
+)

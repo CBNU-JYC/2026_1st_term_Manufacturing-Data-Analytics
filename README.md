@@ -8,7 +8,7 @@
 
 충북대학교 산업인공지능학 전공 `제조 데이터 분석과 최적화` 강의의 실습 코드, 과제, 설명용 스크립트, 생성 데이터셋을 정리한 저장소입니다.
 
-이 저장소는 제조 데이터 품질 정제, OPC-UA 통신 실습, 데이터 파이프라인 구축, 정보 모델 실습, 예지보전 분류 과제, MVTec 이상 탐지 프로젝트를 주차별로 관리하는 것을 목표로 합니다.
+이 저장소는 제조 데이터 품질 정제, OPC-UA 통신 실습, 데이터 파이프라인 구축, 정보 모델 실습, 예지보전 분류 과제, 이미지/음향 기반 이상 탐지 실습을 주차별로 관리하는 것을 목표로 합니다.
 
 ## 저장소 정보
 
@@ -37,7 +37,10 @@
 - OPC UA 정보 모델 심화 실습
 - SECOM 반도체 공정 데이터셋 품질 확보 과제
 - AI4I 2020 기반 제조 설비 고장 분류 모델 개선
-- MVTec AD 기반 오토인코더 이상 탐지 프로젝트
+- MVTec AD 기반 오토인코더 이상 탐지 실습 및 성능 개선 과제
+- 크로메이트 표면 이미지 기반 CNN 분류 실습
+- 팬(FAN) 사운드 기반 이상 탐지 실습
+- MIMII 밸브 사운드 기반 오토인코더 이상 탐지 실습
 
 ## 프로젝트 구성
 
@@ -50,7 +53,11 @@
 | `4th_project_0324/4th_practice/information_model` | OPC UA 정보 모델 심화 실습 | `advanced_server.py`, `advanced_client.py` | 정보 모델 실습 로그 및 호출 결과 |
 | `5th_homework_0407` | AI4I 2020 예지보전 데이터셋 기반 개선 분류 과제 | `improved_model.py`, `z_explanation_improved_model.py` | `evaluation_result.png`, `results.json`, `models/` |
 | `5th_project_0331/5th_practice_numerical` | 수치형 제조 데이터 기반 예지보전 실습 | `fault_diagnosis_mlp.pth`, `best_lstm_ae.pth` 외 실습 결과물 | 학습 모델, 임곗값 분석 그래프, 재구성 오차 시각화 |
-| `6th_project_0407/mvtec` | MVTec AD bottle 클래스 기반 오토인코더 이상 탐지 프로젝트 | `step1_data_eda.py`, `step2_train.py`, `step3_evaluate.py` | `autoencoder_model.pth`, 평가용 시각화 및 데이터셋 |
+| `6th_practice_image_0407/cromate_cnn_anomaly` | 크로메이트 표면 이미지 기반 CNN 분류 실습 | `step1_data_analysis.py`, `step2_train.py`, `step3_evaluation.py`, `step4_inference.py` | `cnn_model.pth`, Grad-CAM 기반 추론 결과 |
+| `6th_practice_image_0407/mvtec` | MVTec AD bottle 클래스 기반 오토인코더 이상 탐지 실습 | `step1_data_eda.py`, `step2_train.py`, `step3_evaluate.py` | `autoencoder_model.pth`, `results/`, 평가 시각화 |
+| `6th_homework_0421/mvtec` | MVTec AD bottle 클래스 기반 CAE 성능 개선 과제 | `homework_code.py`, `homework_code_0.8630.py` | `outputs/metrics.json`, `outputs/curves.png`, `outputs/samples.png`, `outputs/best_cae.pth` |
+| `7th_KAMP_sound_0414` | 팬(FAN) 사운드 기반 이상 탐지 실습 | `step1_eda.py`, `step2_train.py`, `step3_evaluate.py`, `step4_inference.py` | `visualizations/`, `results/`, `dtc_sound_model.pkl` |
+| `7th_MIMII_sound_0414` | MIMII 밸브 사운드 기반 오토인코더 이상 탐지 실습 | `step1_eda_audio.py`, `step2_train_audio_ae.py`, `step3_eval_audio_ae.py`, `step4_inference_audio_ae.py` | `visualizations/`, `results/`, `audio_models/` |
 
 ## 주요 과제 및 실습 요약
 
@@ -86,12 +93,35 @@
 - `z_explanation_improved_model.py`는 동일 로직을 학습용 설명과 함께 정리한 주석 강화 버전입니다.
 - 결과물로 `evaluation_result.png`, `results.json`, `models/improved_mlp.pth`, `models/improved_scaler.pkl`, `models/optimal_threshold.pkl`을 저장합니다.
 
-### 5. `6th_project_0407`
+### 5. `6th_practice_image_0407`
 
-- MVTec AD `bottle` 클래스 데이터를 사용해 비지도 이상 탐지 오토인코더를 학습하고 평가하는 프로젝트입니다.
-- `step1_data_eda.py`는 데이터 구조 확인과 이미지 분포 탐색을 담당합니다.
-- `step2_train.py`는 정상 이미지를 기반으로 오토인코더를 학습하고 `autoencoder_model.pth`를 저장합니다.
-- `step3_evaluate.py`는 재구성 오차를 이용해 이상 여부를 판별하고 평가를 수행합니다.
+- 6주차 이미지 실습은 `cromate_cnn_anomaly`와 `mvtec` 두 흐름으로 구성됩니다.
+- `cromate_cnn_anomaly`는 정상/불량 라벨 이미지 분류용 CNN을 학습하고 `step4_inference.py`에서 Grad-CAM 기반 설명형 추론을 수행합니다.
+- `mvtec`는 MVTec AD `bottle` 클래스 데이터를 사용해 정상 이미지만으로 오토인코더를 학습하고, 재구성 오차 기반 이상 탐지를 평가합니다.
+- `z_explanation_study_guide.md`와 `z_explanation_*.py` 파일은 실습 흐름을 복습하기 위한 설명용 자료입니다.
+
+### 6. `6th_homework_0421`
+
+- 6주차 과제는 MVTec AD `bottle` 클래스 기반 CAE 모델 성능 개선을 목표로 합니다.
+- `homework_code.py`는 SSIM+L1 하이브리드 손실, 더 깊은 인코더 구조, top-k 이상 점수, 스케줄링과 early stopping을 적용해 성능을 개선합니다.
+- 결과물 `outputs/metrics.json` 기준으로 `best_f1 = 0.9037`, `auroc = 0.7079`, `optimal_threshold = 0.0813`을 기록했습니다.
+- `homework_code_0.8630.py`는 개선 전 비교용 베이스라인 버전으로 함께 보관했습니다.
+
+### 7. `7th_KAMP_sound_0414`
+
+- 팬(FAN) 사운드 데이터를 이용해 정상/이상 여부를 분류하는 실습입니다.
+- `step1_eda.py`는 파형, Half Spectrum, MFCC, 상관관계 히트맵을 생성합니다.
+- `step2_train.py`는 특징 추출 후 의사결정나무 모델을 학습하고 `dtc_sound_model.pkl`을 저장합니다.
+- `step3_evaluate.py`는 정확도, 재현율, 정밀도, F1-Score를 평가하고 오분류 샘플을 분석합니다.
+- `step4_inference.py`는 새로운 음원에 대해 추론하고 `results/step4_inference_results.csv`를 저장합니다.
+
+### 8. `7th_MIMII_sound_0414`
+
+- MIMII 밸브 사운드 데이터를 이용해 오토인코더 기반 이상 탐지를 실습합니다.
+- `step1_eda_audio.py`는 waveform, spectrogram, mel-spectrogram을 생성합니다.
+- `step2_train_audio_ae.py`는 오토인코더를 학습하고 손실 곡선 이미지 및 모델 가중치를 저장합니다.
+- `step3_eval_audio_ae.py`는 복원 오차 분포, ROC-AUC, Confusion Matrix, 재구성 결과를 평가합니다.
+- `step4_inference_audio_ae.py`는 시간대별 anomaly score를 계산하고 `results/step4_inference_scores.csv`를 저장합니다.
 
 ## 빠른 시작
 
@@ -200,28 +230,73 @@ python improved_model.py
 - 최적 threshold 기반 평가 결과 계산
 - `evaluation_result.png`, `results.json`, `models/` 산출물 저장
 
-### 7. MVTec 오토인코더 프로젝트 실행
+### 7. 6주차 이미지 실습 실행
 
-데이터 탐색:
-
-```bash
-cd 6th_project_0407/mvtec
-python step1_data_eda.py
-```
-
-학습:
+크로메이트 CNN 분류:
 
 ```bash
-cd 6th_project_0407/mvtec
+cd 6th_practice_image_0407/cromate_cnn_anomaly
+python step1_data_analysis.py
 python step2_train.py
+python step3_evaluation.py
+python step4_inference.py
 ```
 
-평가:
+MVTec 오토인코더 실습:
 
 ```bash
-cd 6th_project_0407/mvtec
+cd 6th_practice_image_0407/mvtec
+python step1_data_eda.py
+python step2_train.py
 python step3_evaluate.py
 ```
+
+실행 결과:
+
+- `cromate_cnn_anomaly/cnn_model.pth` 저장
+- `mvtec/results/`에 이상 샘플 시각화 및 평가 지표 저장
+
+### 8. 6주차 MVTec 성능 개선 과제 실행
+
+```bash
+cd 6th_homework_0421/mvtec
+python homework_code.py
+```
+
+실행 결과:
+
+- `outputs/best_cae.pth`, `outputs/train_history.json`, `outputs/metrics.json` 저장
+- `outputs/curves.png`, `outputs/samples.png`로 학습 곡선과 샘플 복원 결과 확인
+
+### 9. KAMP 팬 사운드 이상 탐지 실습 실행
+
+```bash
+cd 7th_KAMP_sound_0414
+python3 step1_eda.py
+python3 step2_train.py
+python3 step3_evaluate.py
+python3 step4_inference.py
+```
+
+실행 결과:
+
+- `visualizations/`에 EDA 및 오분류 분석 이미지 저장
+- `results/step4_inference_results.csv` 저장
+
+### 10. MIMII 밸브 사운드 오토인코더 실습 실행
+
+```bash
+cd 7th_MIMII_sound_0414
+python3 step1_eda_audio.py
+python3 step2_train_audio_ae.py
+python3 step3_eval_audio_ae.py
+python3 step4_inference_audio_ae.py
+```
+
+실행 결과:
+
+- `visualizations/`에 EDA, 학습 곡선, 평가 그래프 저장
+- `results/step4_inference_scores.csv` 저장
 
 ## 현재 저장소 구조
 

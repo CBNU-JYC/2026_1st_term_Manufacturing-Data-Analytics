@@ -5,9 +5,12 @@ import pandas as pd
 import numpy as np
 import joblib
 import os
+import json
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
+RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 print("실시간 추론(Inference) 환경 준비 중...")
 
@@ -118,3 +121,13 @@ if is_fault:
 else:
     print("[정상] 설비가 안정적으로 가동 중입니다.")
 print("="*40)
+
+result = {
+    "incoming_data": incoming_data,
+    "fault_probability_percent": round(prob * 100, 4),
+    "is_fault": bool(is_fault),
+}
+(RESULTS_DIR / "step4_inference_result.json").write_text(
+    json.dumps(result, ensure_ascii=False, indent=2),
+    encoding="utf-8",
+)

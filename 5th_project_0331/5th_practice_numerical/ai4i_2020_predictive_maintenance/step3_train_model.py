@@ -1,5 +1,6 @@
 # 라이브러리 임포트 및 전처리 데이터 불러오기
 import os
+import json
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -19,6 +20,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 import joblib
+import pandas as pd
+
+RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 
@@ -77,6 +82,7 @@ writer.add_graph(model, dummy_input)
 # 모델 학습 및 검증 루프 (Training & Validation Loop)
 epochs = 30
 print("\n [모델 학습 시작]")
+training_history = []
 
 for epoch in range(epochs):
     # --- 1. Training Phase ---
@@ -125,6 +131,14 @@ for epoch in range(epochs):
     # 진행 상황 출력
     if (epoch + 1) % 5 == 0 or epoch == 0:
         print(f"Epoch [{epoch+1:2d}/{epochs}] | Train Loss: {avg_train_loss:.4f} | Val Loss: {avg_val_loss:.4f} | Val F1: {val_f1:.4f}")
+    training_history.append(
+        {
+            "epoch": epoch + 1,
+            "train_loss": round(avg_train_loss, 6),
+            "val_loss": round(avg_val_loss, 6),
+            "val_f1": round(float(val_f1), 6),
+        }
+    )
 
 writer.close()
 print("학습 및 TensorBoard 기록 완료!")
@@ -158,6 +172,18 @@ print(f"Precision (정밀도): {prec:.4f}")
 print(f"Recall (재현율):    {rec:.4f}")
 print(f"F1-Score:           {f1:.4f}")
 print(f"ROC-AUC:            {auc:.4f}")
+metrics = {
+    "accuracy": float(acc),
+    "precision": float(prec),
+    "recall": float(rec),
+    "f1_score": float(f1),
+    "roc_auc": float(auc),
+}
+(RESULTS_DIR / "step3_test_metrics.json").write_text(
+    json.dumps(metrics, ensure_ascii=False, indent=2),
+    encoding="utf-8",
+)
+pd.DataFrame(training_history).to_csv(RESULTS_DIR / "step3_training_history.csv", index=False)
 
 # 모델 가중치 및 스케일러 저장
 # 디렉토리가 없으면 생성 (선택 사항)
@@ -217,3 +243,10 @@ plt.tight_layout()
 plt.savefig(BASE_DIR / 'training_evaluation_summary.png', dpi=150)
 plt.close()
 print("평가 시각화 저장 완료! (training_evaluation_summary.png)")
+pd.DataFrame(
+    {
+        "target": [float(x) for x in all_targets],
+        "prediction": [float(x) for x in all_preds],
+        "probability": [float(x) for x in all_probs],
+    }
+).to_csv(RESULTS_DIR / "step3_test_predictions.csv", index=False)

@@ -1,4 +1,5 @@
 import os
+import json
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -6,9 +7,12 @@ os.environ.setdefault("MPLCONFIGDIR", str(BASE_DIR / ".matplotlib"))
 os.environ.setdefault("XDG_CACHE_HOME", str(BASE_DIR / ".cache"))
 Path(os.environ["MPLCONFIGDIR"]).mkdir(parents=True, exist_ok=True)
 Path(os.environ["XDG_CACHE_HOME"]).mkdir(parents=True, exist_ok=True)
+RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 import torch
 import numpy as np
+import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -104,10 +108,31 @@ with torch.no_grad():
 
 mse_test = np.mean(np.power(flatten_last_step(Y_test_shuffled) - flatten_last_step(test_predictions), 2), axis=1)
 pred_y = [1 if e > optimal_threshold else 0 for e in mse_test]
+cm = confusion_matrix(Y_te_index_shuffled, pred_y)
 
 print(f"\n[최종 평가 결과]", flush=True)
 print(f"정확도 (Accuracy): {accuracy_score(Y_te_index_shuffled, pred_y)*100:.2f}%", flush=True)
 print(f"F1-Score: {f1_score(Y_te_index_shuffled, pred_y):.4f}", flush=True)
+metrics = {
+    "optimal_threshold": float(optimal_threshold),
+    "accuracy": float(accuracy_score(Y_te_index_shuffled, pred_y)),
+    "precision": float(precision_score(Y_te_index_shuffled, pred_y, zero_division=0)),
+    "recall": float(recall_score(Y_te_index_shuffled, pred_y, zero_division=0)),
+    "f1_score": float(f1_score(Y_te_index_shuffled, pred_y, zero_division=0)),
+    "confusion_matrix": cm.tolist(),
+}
+(RESULTS_DIR / "step3_evaluation_metrics.json").write_text(
+    json.dumps(metrics, ensure_ascii=False, indent=2),
+    encoding="utf-8",
+)
+pd.DataFrame(
+    {
+        "shuffled_index": shuffle_idx.tolist(),
+        "y_true": Y_te_index_shuffled.tolist(),
+        "y_pred": pred_y,
+        "reconstruction_error": mse_test.tolist(),
+    }
+).to_csv(RESULTS_DIR / "step3_predictions.csv", index=False)
 
 # 정상 데이터와 이상 데이터의 오차 분리
 mse_normal = mse_test[Y_te_index_shuffled == 0]
@@ -143,7 +168,6 @@ plt.savefig(BASE_DIR / 'reconstruction_error_distribution.png', dpi=150)
 plt.close()
 
 # [시각화 4] 오차 행렬 (Confusion Matrix) 
-cm = confusion_matrix(Y_te_index_shuffled, pred_y)
 plt.figure(figsize=(6, 5))
 sns.heatmap(cm, annot=True, cmap="Blues", fmt="g", cbar=False, annot_kws={"size": 14})
 plt.xlabel('Predicted Labels', fontsize=12)

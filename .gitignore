@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 .cache/
+.mplconfig/
 .matplotlib/
 .vscode/
 .idea/
+6th_practice_image_0407/cromate_cnn_anomaly/cnn_model.pth

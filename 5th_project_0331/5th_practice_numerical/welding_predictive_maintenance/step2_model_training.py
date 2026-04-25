@@ -1,9 +1,13 @@
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
+import json
+import pandas as pd
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
+RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # 1. 저장된 데이터 로딩
 print("데이터를 불러옵니다...", flush=True)
@@ -104,3 +108,22 @@ for epoch in range(epochs):
             break
 
 print("학습 완료! (best_lstm_ae.pth 저장됨)", flush=True)
+pd.DataFrame(
+    {
+        "epoch": list(range(1, len(train_losses) + 1)),
+        "train_loss": train_losses,
+        "valid_loss": valid_losses,
+    }
+).to_csv(RESULTS_DIR / "step2_training_history.csv", index=False)
+(RESULTS_DIR / "step2_training_summary.json").write_text(
+    json.dumps(
+        {
+            "epochs_ran": len(train_losses),
+            "best_val_loss": float(best_val_loss),
+            "device": str(device),
+        },
+        ensure_ascii=False,
+        indent=2,
+    ),
+    encoding="utf-8",
+)

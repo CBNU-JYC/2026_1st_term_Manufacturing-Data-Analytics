@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import json
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -7,6 +8,8 @@ import torch
 from torch.utils.data import Dataset, DataLoader, WeightedRandomSampler
 
 BASE_DIR = Path(__file__).resolve().parent
+RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 print("라이브러리 로드 완료")
 
 # 데이터 로드 (EDA 단계와 동일한 원본 데이터)
@@ -104,3 +107,14 @@ for batch_X, batch_y in train_loader:
     print(f"- y 텐서 형태: {batch_y.shape}")
     print(f"- 1개 배치({batch_size}개) 내 고장(1) 데이터 개수: {int(batch_y.sum().item())}개")
     break
+
+summary = {
+    "train_shape": list(X_train.shape),
+    "test_shape": list(X_test.shape),
+    "feature_columns": X.columns.tolist(),
+    "class_counts_train": {str(k): int(v) for k, v in y_train.value_counts().sort_index().to_dict().items()},
+}
+(RESULTS_DIR / "step2_data_prep_summary.json").write_text(
+    json.dumps(summary, ensure_ascii=False, indent=2),
+    encoding="utf-8",
+)
