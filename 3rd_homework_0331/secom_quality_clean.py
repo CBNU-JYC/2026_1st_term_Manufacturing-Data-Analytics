@@ -73,7 +73,9 @@ warnings.filterwarnings('ignore')
 
 BASE_DIR = Path(__file__).resolve().parent
 INPUT_PATH = BASE_DIR / 'uci-secom.csv'
-OUTPUT_PATH = BASE_DIR / 'cleaned_secom_data.csv'
+RESULT_DIR = BASE_DIR / '0_result'
+RESULT_DIR.mkdir(parents=True, exist_ok=True)
+OUTPUT_PATH = RESULT_DIR / 'cleaned_secom_data.csv'
 
 # =============================================================================
 # 데이터 로드

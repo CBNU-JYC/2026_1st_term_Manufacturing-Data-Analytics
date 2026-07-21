@@ -173,7 +173,7 @@ def train_model():
         print(f"Epoch [{epoch+1}/{epochs}], Loss: {running_loss/len(train_loader):.4f}")
 
     # 학습이 끝난 모델을 저장할 파일 경로를 만듭니다.
-    model_path = base_dir / "cnn_model.pth"
+    model_path = results_dir / "cnn_model.pth"
 
     # 모델의 배운 가중치를 파일로 저장합니다.
     torch.save(model.state_dict(), model_path)

@@ -79,8 +79,8 @@ plt.rcParams['font.family'] = 'Malgun Gothic'  # 한글 글자가 깨지지 않�
 plt.rcParams['axes.unicode_minus'] = False  # 그래프의 마이너스 기호가 깨지지 않게 합니다.
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # 이 코드 파일이 들어있는 폴더입니다.
-VIS_DIR = os.path.join(BASE_DIR, "visualizations")  # 그림을 저장할 폴더 경로입니다.
-RESULTS_DIR = os.path.join(BASE_DIR, "results")  # 표와 요약 결과를 저장할 폴더 경로입니다.
+VIS_DIR = os.path.join(BASE_DIR, "0_result")  # 그림을 저장할 폴더 경로입니다.
+RESULTS_DIR = os.path.join(BASE_DIR, "0_result")  # 표와 요약 결과를 저장할 폴더 경로입니다.
 os.makedirs(VIS_DIR, exist_ok=True)  # 그림 저장 폴더가 없으면 새로 만듭니다.
 os.makedirs(RESULTS_DIR, exist_ok=True)  # 결과 저장 폴더가 없으면 새로 만듭니다.
 

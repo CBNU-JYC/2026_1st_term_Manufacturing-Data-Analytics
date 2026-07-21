@@ -2,6 +2,8 @@ import os  # 실행 환경 변수 설정을 위해 사용합니다.
 from pathlib import Path  # 현재 스크립트 위치를 기준으로 경로를 다루기 위해 사용합니다.
 
 BASE_DIR = Path(__file__).resolve().parent  # 이 평가 스크립트가 들어 있는 폴더 경로를 구합니다.
+RESULTS_DIR = BASE_DIR / "0_result"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 os.environ.setdefault("MPLCONFIGDIR", str(BASE_DIR / ".matplotlib"))  # matplotlib 설정/캐시 폴더를 현재 프로젝트 안쪽으로 지정합니다.
 os.environ.setdefault("XDG_CACHE_HOME", str(BASE_DIR / ".cache"))  # 글꼴 등 캐시 폴더도 현재 프로젝트 안쪽으로 지정합니다.
 Path(os.environ["MPLCONFIGDIR"]).mkdir(parents=True, exist_ok=True)  # matplotlib 캐시 폴더가 없으면 자동으로 만듭니다.
@@ -41,12 +43,12 @@ class LSTM_AE(nn.Module):  # 학습 때 사용한 것과 같은 모델 구조를
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # GPU 가능 여부에 따라 계산 장치를 선택합니다.
 
 print("1. 데이터 및 모델 로딩 중...", flush=True)  # 평가 준비 시작 메시지를 출력합니다.
-dataset = torch.load(BASE_DIR / 'processed_dataset.pt', weights_only=False)  # 전처리된 데이터 파일을 불러옵니다.
+dataset = torch.load(RESULTS_DIR / 'processed_dataset.pt', weights_only=False)  # 전처리된 데이터 파일을 불러옵니다.
 X_valid, Y_valid, Y_val_index = dataset['X_valid'], dataset['Y_valid'], dataset['Y_val_index']  # 전체 검증 데이터와 라벨을 꺼냅니다.
 X_test, Y_test, Y_te_index = dataset['X_test'], dataset['Y_test'], dataset['Y_te_index']  # 전체 테스트 데이터와 라벨을 꺼냅니다.
 
 model = LSTM_AE(n_features=5, seq_len=20).to(device)  # 학습 때와 같은 구조의 모델을 생성해 장치로 보냅니다.
-model.load_state_dict(torch.load(BASE_DIR / 'best_lstm_ae.pth', weights_only=True))  # 가장 성능이 좋았던 저장 가중치를 불러옵니다.
+model.load_state_dict(torch.load(RESULTS_DIR / 'best_lstm_ae.pth', weights_only=True))  # 가장 성능이 좋았던 저장 가중치를 불러옵니다.
 model.eval()  # 추론 전용 평가 모드로 전환합니다.
 
 
@@ -87,7 +89,7 @@ plt.ylabel('Score')  # y축 이름을 지정합니다.
 plt.legend()  # 범례를 표시합니다.
 plt.grid(True, alpha=0.3)  # 보기 편하도록 옅은 격자선을 추가합니다.
 plt.tight_layout()  # 그래프 요소가 잘리지 않도록 여백을 자동 조정합니다.
-plt.savefig(BASE_DIR / 'precision_recall_threshold.png', dpi=150)  # 첫 번째 그래프를 PNG 파일로 저장합니다.
+plt.savefig(RESULTS_DIR / 'precision_recall_threshold.png', dpi=150)  # 첫 번째 그래프를 PNG 파일로 저장합니다.
 plt.close()  # 현재 그래프 객체를 닫아 메모리를 정리합니다.
 
 # ---------------------------------------------------------
@@ -129,7 +131,7 @@ plt.ylabel('Reconstruction Error (MSE)')  # y축 이름을 지정합니다.
 plt.legend()  # 범례를 표시합니다.
 plt.grid(True, alpha=0.3)  # 옅은 격자선을 추가합니다.
 plt.tight_layout()  # 레이아웃을 정리합니다.
-plt.savefig(BASE_DIR / 'reconstruction_error_scatter.png', dpi=150)  # 산점도 그래프를 파일로 저장합니다.
+plt.savefig(RESULTS_DIR / 'reconstruction_error_scatter.png', dpi=150)  # 산점도 그래프를 파일로 저장합니다.
 plt.close()  # 그래프 객체를 닫습니다.
 
 # [시각화 3] 재구성 오차 분포
@@ -142,7 +144,7 @@ plt.xlabel('Reconstruction Error (MSE)')  # x축 이름을 지정합니다.
 plt.ylabel('Density')  # y축 이름을 지정합니다.
 plt.legend()  # 범례를 표시합니다.
 plt.tight_layout()  # 레이아웃을 정리합니다.
-plt.savefig(BASE_DIR / 'reconstruction_error_distribution.png', dpi=150)  # 분포 그래프를 파일로 저장합니다.
+plt.savefig(RESULTS_DIR / 'reconstruction_error_distribution.png', dpi=150)  # 분포 그래프를 파일로 저장합니다.
 plt.close()  # 그래프 객체를 닫습니다.
 
 # [시각화 4] 오차 행렬
@@ -155,7 +157,7 @@ plt.title('Confusion Matrix of LSTM-AE', fontsize=14)  # 그래프 제목을 지
 plt.xticks([0.5, 1.5], ['Normal (0)', 'Anomaly (1)'])  # x축 눈금 이름을 정상/이상으로 표시합니다.
 plt.yticks([0.5, 1.5], ['Normal (0)', 'Anomaly (1)'])  # y축 눈금 이름도 정상/이상으로 표시합니다.
 plt.tight_layout()  # 레이아웃을 정리합니다.
-plt.savefig(BASE_DIR / 'confusion_matrix.png', dpi=150)  # 혼동행렬 이미지를 파일로 저장합니다.
+plt.savefig(RESULTS_DIR / 'confusion_matrix.png', dpi=150)  # 혼동행렬 이미지를 파일로 저장합니다.
 plt.close()  # 그래프 객체를 닫습니다.
 
 print("평가 완료! 결과 이미지 4개가 저장되었습니다.", flush=True)  # 평가 종료와 결과 저장 완료를 출력합니다.

@@ -114,7 +114,7 @@ if BASE_DIR is None:
 
 TRAIN_DIR   = os.path.join(BASE_DIR, "train", "good")
 TEST_DIR    = os.path.join(BASE_DIR, "test")
-SAVE_DIR    = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+SAVE_DIR    = os.path.join(os.path.dirname(os.path.abspath(__file__)), "0_result")
 MODEL_PATH  = os.path.join(SAVE_DIR, "cae_improved.pth")
 os.makedirs(SAVE_DIR, exist_ok=True)
 

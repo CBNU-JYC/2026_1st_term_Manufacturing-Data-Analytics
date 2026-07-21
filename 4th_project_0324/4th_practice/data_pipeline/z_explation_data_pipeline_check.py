@@ -1,3 +1,7 @@
+from pathlib import Path
+
+RESULT_DIR = Path(__file__).resolve().parent / "0_result"
+RESULT_DIR.mkdir(parents=True, exist_ok=True)
 """
 이 파일은 `data_pipeline_check.py`를 쉽게 이해할 수 있도록 다시 풀어쓴 설명용 버전입니다.
 
@@ -152,7 +156,7 @@ async def main():
 
     # 정제 전 원시 데이터를 따로 저장합니다.
     # 나중에 원본 상태와 정제 결과를 비교하기 좋습니다.
-    raw_filename = "raw_sensor_dataset.csv"
+    raw_filename = RESULT_DIR / "raw_sensor_dataset.csv"
     df_raw.to_csv(raw_filename, index=False, encoding="utf-8-sig")
     print(f"\n[저장 완료] 정제 전 원시 데이터가 '{raw_filename}'로 저장되었습니다.")
 
@@ -198,7 +202,7 @@ async def main():
     evaluate_data_quality(df_clean, "정제 및 라벨링 완료 데이터")
 
     # 정제 후 최종 데이터 저장
-    clean_filename = "verified_sensor_dataset.csv"
+    clean_filename = RESULT_DIR / "verified_sensor_dataset.csv"
     df_clean.to_csv(clean_filename, index=False, encoding="utf-8-sig")
     print(f"\n[저장 완료] 최종 데이터셋이 '{clean_filename}'로 저장되었습니다.")
 

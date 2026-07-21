@@ -66,7 +66,7 @@ print(f"[Info] Device: {DEVICE}")
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "mvtec_ad" / "bottle"
-OUT_DIR  = BASE_DIR / "outputs"
+OUT_DIR  = BASE_DIR / "0_result"
 OUT_DIR.mkdir(exist_ok=True)
 
 IMG_SIZE     = 256

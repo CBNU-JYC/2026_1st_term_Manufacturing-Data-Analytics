@@ -4,6 +4,10 @@ import numpy as np
 from asyncua import Client
 from datetime import datetime
 import random
+from pathlib import Path
+
+RESULT_DIR = Path(__file__).resolve().parent / "0_result"
+RESULT_DIR.mkdir(parents=True, exist_ok=True)
 
 # 품질 검증 함수 (5대 지표)
 def evaluate_data_quality(df, stage_name):
@@ -80,7 +84,7 @@ async def main():
     df_raw = pd.DataFrame(collected_data)
     
     # 정제 전 원시 데이터(Raw Data) 별도 저장
-    raw_filename = "raw_sensor_dataset.csv"
+    raw_filename = RESULT_DIR / "raw_sensor_dataset.csv"
     df_raw.to_csv(raw_filename, index=False, encoding='utf-8-sig')
     print(f"\n[저장 완료] 정제 전 원시 데이터가 '{raw_filename}'로 저장되었습니다.")
     
@@ -105,7 +109,7 @@ async def main():
     # ==========================================
     # 정제 후 최종 데이터(Clean Data) 저장
     # ==========================================
-    clean_filename = "verified_sensor_dataset.csv"
+    clean_filename = RESULT_DIR / "verified_sensor_dataset.csv"
     df_clean.to_csv(clean_filename, index=False, encoding='utf-8-sig')
     print(f"\n[저장 완료] 최종 데이터셋이 '{clean_filename}'로 저장되었습니다.")
 

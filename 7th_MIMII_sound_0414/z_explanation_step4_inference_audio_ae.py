@@ -17,8 +17,8 @@ import torch  # PyTorch 모델을 실행할 때 사용합니다.
 import torch.nn as nn  # 신경망 층과 MSELoss를 사용할 때 필요합니다.
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # 현재 코드가 있는 폴더입니다.
-VIS_DIR = os.path.join(BASE_DIR, "visualizations")  # 그림 저장 폴더입니다.
-RESULTS_DIR = os.path.join(BASE_DIR, "results")  # 결과 저장 폴더입니다.
+VIS_DIR = os.path.join(BASE_DIR, "0_result")  # 그림 저장 폴더입니다.
+RESULTS_DIR = os.path.join(BASE_DIR, "0_result")  # 결과 저장 폴더입니다.
 os.makedirs(VIS_DIR, exist_ok=True)  # 그림 폴더가 없으면 만듭니다.
 os.makedirs(RESULTS_DIR, exist_ok=True)  # 결과 폴더가 없으면 만듭니다.
 

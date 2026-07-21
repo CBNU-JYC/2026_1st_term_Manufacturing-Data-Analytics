@@ -12,7 +12,7 @@ from torch.utils.data import Dataset, DataLoader
 from PIL import Image
 from simple_vision import Compose, Resize, ToTensor, resolve_data_dir
 
-RESULTS_DIR = base_dir / "results"
+RESULTS_DIR = base_dir / "0_result"
 RESULTS_DIR.mkdir(exist_ok=True)
 
 class MVTecDataset(Dataset):

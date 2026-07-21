@@ -82,8 +82,8 @@ plt.rcParams['figure.figsize'] = (12, 6)  # 기본 그림 크기를 정합니다
 print("라이브러리 로드 완료")  # 준비 완료를 알립니다.
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # 현재 코드가 들어있는 폴더입니다.
-VIS_DIR = os.path.join(BASE_DIR, "visualizations")  # 그림 저장 폴더입니다.
-RESULTS_DIR = os.path.join(BASE_DIR, "results")  # 결과 저장 폴더입니다.
+VIS_DIR = os.path.join(BASE_DIR, "0_result")  # 그림 저장 폴더입니다.
+RESULTS_DIR = os.path.join(BASE_DIR, "0_result")  # 결과 저장 폴더입니다.
 os.makedirs(VIS_DIR, exist_ok=True)  # 그림 저장 폴더가 없으면 만듭니다.
 os.makedirs(RESULTS_DIR, exist_ok=True)  # 결과 저장 폴더가 없으면 만듭니다.
 

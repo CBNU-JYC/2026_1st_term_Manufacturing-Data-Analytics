@@ -12,7 +12,7 @@ from simple_vision import Compose, Resize, SimpleImageFolder, ToTensor
 transform = Compose([Resize((256, 256)), ToTensor()])
 
 BASE_DIR = Path(__file__).resolve().parent
-RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR = BASE_DIR / "0_result"
 RESULTS_DIR.mkdir(exist_ok=True)
 
 # 데이터 경로 설정 (가이드북의 '학습', '테스트' 폴더 구조를 가정)
@@ -104,7 +104,7 @@ with torch.no_grad():
         correct += (predicted == labels).sum().item()
 
 print(f"테스트 데이터 정확도 (Accuracy): {100 * correct / total:.2f}%")
-torch.save(model.state_dict(), BASE_DIR / "cnn_anomaly_model.pth")
+torch.save(model.state_dict(), RESULTS_DIR / "cnn_anomaly_model.pth")
 (RESULTS_DIR / "cnn_anomaly_summary.json").write_text(
     json.dumps(
         {

@@ -72,18 +72,18 @@ def explain_decision_path(model, sample_X, feature_names):
 print("저장된 모델과 테스트 데이터를 불러옵니다...")  # 파일 로드 시작을 알립니다.
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # 현재 코드 파일이 있는 폴더입니다.
-VIS_DIR = os.path.join(BASE_DIR, "visualizations")  # 시각화 이미지를 저장할 폴더입니다.
-RESULTS_DIR = os.path.join(BASE_DIR, "results")  # 평가 결과 파일을 저장할 폴더입니다.
+VIS_DIR = os.path.join(BASE_DIR, "0_result")  # 시각화 이미지를 저장할 폴더입니다.
+RESULTS_DIR = os.path.join(BASE_DIR, "0_result")  # 평가 결과 파일을 저장할 폴더입니다.
 os.makedirs(VIS_DIR, exist_ok=True)  # 이미지 폴더가 없으면 만듭니다.
 os.makedirs(RESULTS_DIR, exist_ok=True)  # 결과 폴더가 없으면 만듭니다.
 
 try:  # 필요한 파일들이 있는지 확인하며 불러옵니다.
-    Dtc_loaded = joblib.load(os.path.join(BASE_DIR, 'dtc_sound_model.pkl'))  # 학습된 모델을 불러옵니다.
-    X_test = pd.read_csv(os.path.join(BASE_DIR, 'X_test.csv'))  # 테스트 입력 데이터를 읽습니다.
-    y_test = pd.read_csv(os.path.join(BASE_DIR, 'y_test.csv'))['NG']  # 테스트 정답만 읽습니다.
+    Dtc_loaded = joblib.load(os.path.join(RESULTS_DIR, 'dtc_sound_model.pkl'))  # 학습된 모델을 불러옵니다.
+    X_test = pd.read_csv(os.path.join(RESULTS_DIR, 'X_test.csv'))  # 테스트 입력 데이터를 읽습니다.
+    y_test = pd.read_csv(os.path.join(RESULTS_DIR, 'y_test.csv'))['NG']  # 테스트 정답만 읽습니다.
 
     test_filepaths = None  # 테스트 파일 경로가 없을 수도 있으므로 처음에는 비워둡니다.
-    test_filepaths_path = os.path.join(BASE_DIR, 'test_filepaths.csv')  # 파일 경로 CSV 위치입니다.
+    test_filepaths_path = os.path.join(RESULTS_DIR, 'test_filepaths.csv')  # 파일 경로 CSV 위치입니다.
     if os.path.exists(test_filepaths_path):  # 파일 경로 CSV가 있으면 읽습니다.
         test_filepaths = pd.read_csv(test_filepaths_path)['filepath']  # 원본 오디오 경로 열입니다.
 

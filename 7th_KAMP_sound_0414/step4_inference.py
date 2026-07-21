@@ -38,7 +38,7 @@ except ModuleNotFoundError as exc:
 
 warnings.filterwarnings('ignore')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-RESULTS_DIR = os.path.join(BASE_DIR, "results")
+RESULTS_DIR = os.path.join(BASE_DIR, "0_result")
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 # 1. 주파수 스펙트럼 추출 함수 정의 (학습 단계와 동일)
@@ -56,7 +56,7 @@ def predict_fan_status(audio_path, model_path=None):
     print(f"[{audio_path}] 파일 분석을 시작합니다...")
 
     if model_path is None:
-        model_path = os.path.join(BASE_DIR, 'dtc_sound_model.pkl')
+        model_path = os.path.join(RESULTS_DIR, 'dtc_sound_model.pkl')
 
     if not os.path.isabs(audio_path):
         audio_path = os.path.join(BASE_DIR, audio_path)

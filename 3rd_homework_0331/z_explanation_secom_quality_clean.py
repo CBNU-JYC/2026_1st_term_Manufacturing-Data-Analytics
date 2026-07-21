@@ -12,7 +12,9 @@ warnings.filterwarnings('ignore')  # 학습용 출력이 복잡해지지 않도�
 
 BASE_DIR = Path(__file__).resolve().parent  # 이 파이썬 파일이 들어 있는 폴더 경로를 구합니다.
 INPUT_PATH = BASE_DIR / 'uci-secom.csv'  # 입력 데이터 파일 경로입니다.
-OUTPUT_PATH = BASE_DIR / 'cleaned_secom_data.csv'  # 정제 후 저장할 결과 파일 경로입니다.
+RESULT_DIR = BASE_DIR / '0_result'  # 실행 결과를 모아둘 폴더입니다.
+RESULT_DIR.mkdir(parents=True, exist_ok=True)  # 결과 폴더가 없으면 만듭니다.
+OUTPUT_PATH = RESULT_DIR / 'cleaned_secom_data.csv'  # 정제 후 저장할 결과 파일 경로입니다.
 
 
 # =============================================================================

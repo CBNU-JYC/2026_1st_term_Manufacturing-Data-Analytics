@@ -2,6 +2,10 @@ import asyncio
 import pandas as pd
 from asyncua import Client
 from datetime import datetime
+from pathlib import Path
+
+RESULT_DIR = Path(__file__).resolve().parent / "0_result"
+RESULT_DIR.mkdir(parents=True, exist_ok=True)
 
 async def main():
     # 1. OPC-UA 서버 엔드포인트 연결
@@ -42,7 +46,7 @@ async def main():
         df = pd.DataFrame(collected_data)
         
         # 5. CSV 파일로 저장 (데이터셋 생성)
-        csv_filename = "manufacturing_sensor_data.csv"
+        csv_filename = RESULT_DIR / "manufacturing_sensor_data.csv"
         df.to_csv(csv_filename, index=False, encoding='utf-8-sig')
         
         print(f"\n데이터 수집 완료! '{csv_filename}' 파일이 성공적으로 생성되었습니다.")

@@ -11,7 +11,13 @@ Explain_clean_dataset.py
 - 주석은 실행 결과에 영향을 주지 않습니다.
 """
 
+from pathlib import Path
+
 import pandas as pd
+
+BASE_DIR = Path(__file__).resolve().parent
+RESULT_DIR = BASE_DIR / "0_result"
+RESULT_DIR.mkdir(parents=True, exist_ok=True)
 
 # [주석 1]
 # pandas는 표 형태 데이터(CSV, 엑셀, 테이블)를 다룰 때 가장 많이 쓰는 라이브러리입니다.
@@ -198,8 +204,9 @@ print("=" * 60)
 # [주석 23]
 # 정제된 결과를 새 파일로 저장합니다.
 # 원본을 덮어쓰지 않고 별도 파일로 저장하는 것은 안전한 실무 습관입니다.
-df_clean.to_csv('labeled_data_clean.csv', index=False)
-print("파일이 'labeled_data_clean.csv'로 성공적으로 저장되었습니다.")
+output_path = RESULT_DIR / 'labeled_data_clean.csv'
+df_clean.to_csv(output_path, index=False)
+print(f"파일이 '{output_path}'로 성공적으로 저장되었습니다.")
 
 
 # ==========================================================

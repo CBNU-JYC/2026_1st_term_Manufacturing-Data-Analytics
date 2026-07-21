@@ -3,6 +3,8 @@ import os  # 폴더 생성과 환경 변수 설정에 사용합니다.
 from pathlib import Path  # 현재 스크립트 기준 경로를 만들기 위해 사용합니다.
 
 BASE_DIR = Path(__file__).resolve().parent  # 이 파이썬 파일이 들어 있는 폴더 경로를 구합니다.
+RESULTS_DIR = BASE_DIR / "0_result"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 os.environ.setdefault("MPLCONFIGDIR", str(BASE_DIR / ".matplotlib"))  # matplotlib 캐시 폴더를 프로젝트 안으로 지정합니다.
 os.environ.setdefault("XDG_CACHE_HOME", str(BASE_DIR / ".cache"))  # 글꼴 캐시 폴더를 프로젝트 안으로 지정합니다.
 (BASE_DIR / ".matplotlib").mkdir(parents=True, exist_ok=True)  # matplotlib 캐시 폴더가 없으면 자동으로 만듭니다.
@@ -161,9 +163,9 @@ print(f"ROC-AUC:            {auc:.4f}")  # ROC-AUC를 출력합니다.
 
 # 모델 가중치 및 스케일러 저장
 # 디렉토리가 없으면 생성 (선택 사항)
-os.makedirs(BASE_DIR / 'models', exist_ok=True)  # 모델 저장 폴더가 없으면 자동으로 생성합니다.
-model_path = BASE_DIR / 'models' / 'fault_diagnosis_mlp.pth'  # 모델 가중치를 저장할 경로입니다.
-scaler_path = BASE_DIR / 'models' / 'sensor_scaler.pkl'  # 스케일러를 저장할 경로입니다.
+os.makedirs(RESULTS_DIR / 'models', exist_ok=True)  # 모델 저장 폴더가 없으면 자동으로 생성합니다.
+model_path = RESULTS_DIR / 'models' / 'fault_diagnosis_mlp.pth'  # 모델 가중치를 저장할 경로입니다.
+scaler_path = RESULTS_DIR / 'models' / 'sensor_scaler.pkl'  # 스케일러를 저장할 경로입니다.
 
 torch.save(model.state_dict(), model_path)  # 모델 가중치만 파일로 저장합니다.
 joblib.dump(scaler, scaler_path)  # 스케일러 객체를 파일로 저장합니다.
@@ -212,6 +214,6 @@ axes[2].legend(loc="lower right", fontsize=11)  # 범례를 오른쪽 아래에 
 
 # 그래프 간격 조절 및 출력
 plt.tight_layout()  # 그래프 간격을 자동 정리합니다.
-plt.savefig(BASE_DIR / 'training_evaluation_summary.png', dpi=150)  # 평가 요약 그래프를 PNG 파일로 저장합니다.
+plt.savefig(RESULTS_DIR / 'training_evaluation_summary.png', dpi=150)  # 평가 요약 그래프를 PNG 파일로 저장합니다.
 plt.close()  # 그래프 객체를 닫습니다.
 print("평가 시각화 저장 완료! (training_evaluation_summary.png)")  # 저장 완료 메시지를 출력합니다.

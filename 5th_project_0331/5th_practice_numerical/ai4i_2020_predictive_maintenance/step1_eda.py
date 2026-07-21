@@ -5,7 +5,7 @@ import numpy as np
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR = BASE_DIR / "0_result"
 os.environ.setdefault("MPLCONFIGDIR", str(BASE_DIR / ".matplotlib"))
 os.environ.setdefault("XDG_CACHE_HOME", str(BASE_DIR / ".cache"))
 (BASE_DIR / ".matplotlib").mkdir(parents=True, exist_ok=True)
@@ -45,7 +45,7 @@ for i, col in enumerate(sensor_cols):
 # 남는 그래프 공간 숨기기
 axes[5].set_visible(False)
 plt.tight_layout()
-plt.savefig(BASE_DIR / 'eda_sensor_distributions.png', dpi=150)
+plt.savefig(RESULTS_DIR / 'eda_sensor_distributions.png', dpi=150)
 plt.close()
 
 # 센서 변수들 간의 피어슨 상관계수 계산
@@ -55,7 +55,7 @@ plt.figure(figsize=(8, 6))
 sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1, fmt=".2f")
 plt.title('Correlation Matrix of Sensor Variables')
 plt.tight_layout()
-plt.savefig(BASE_DIR / 'eda_correlation_matrix.png', dpi=150)
+plt.savefig(RESULTS_DIR / 'eda_correlation_matrix.png', dpi=150)
 plt.close()
 
 # Machine failure (0: 정상, 1: 고장) 분포 확인
@@ -69,7 +69,7 @@ plt.figure(figsize=(6, 4))
 sns.countplot(data=df, x='Machine failure', hue='Machine failure', palette='Set2', legend=False)
 plt.title('Distribution of Target Variable (Machine failure)')
 plt.tight_layout()
-plt.savefig(BASE_DIR / 'eda_target_distribution.png', dpi=150)
+plt.savefig(RESULTS_DIR / 'eda_target_distribution.png', dpi=150)
 plt.close()
 
 # 세부 고장 유형 파악 (TWF, HDF, PWF, OSF, RNF)

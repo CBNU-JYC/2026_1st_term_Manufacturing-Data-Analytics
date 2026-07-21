@@ -161,7 +161,7 @@ if __name__ == "__main__":
             print(f"Epoch [{epoch+1}/{NUM_EPOCHS}], Loss: {epoch_loss/len(train_loader):.4f}")
 
     # 저장할 모델 파일 경로를 만듭니다.
-    SAVE_PATH = base_dir / "autoencoder_model.pth"
+    SAVE_PATH = results_dir / "autoencoder_model.pth"
 
     # 학습된 가중치를 파일로 저장합니다.
     torch.save(model.state_dict(), SAVE_PATH)

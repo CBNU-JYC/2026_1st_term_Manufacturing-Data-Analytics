@@ -22,7 +22,7 @@ import seaborn as sns
 import joblib
 import pandas as pd
 
-RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR = BASE_DIR / "0_result"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -187,9 +187,9 @@ pd.DataFrame(training_history).to_csv(RESULTS_DIR / "step3_training_history.csv"
 
 # 모델 가중치 및 스케일러 저장
 # 디렉토리가 없으면 생성 (선택 사항)
-os.makedirs(BASE_DIR / 'models', exist_ok=True)
-model_path = BASE_DIR / 'models' / 'fault_diagnosis_mlp.pth'
-scaler_path = BASE_DIR / 'models' / 'sensor_scaler.pkl'
+os.makedirs(RESULTS_DIR / 'models', exist_ok=True)
+model_path = RESULTS_DIR / 'models' / 'fault_diagnosis_mlp.pth'
+scaler_path = RESULTS_DIR / 'models' / 'sensor_scaler.pkl'
 
 torch.save(model.state_dict(), model_path)
 joblib.dump(scaler, scaler_path)
@@ -240,7 +240,7 @@ axes[2].legend(loc="lower right", fontsize=11)
 
 # 그래프 간격 조절 및 출력
 plt.tight_layout()
-plt.savefig(BASE_DIR / 'training_evaluation_summary.png', dpi=150)
+plt.savefig(RESULTS_DIR / 'training_evaluation_summary.png', dpi=150)
 plt.close()
 print("평가 시각화 저장 완료! (training_evaluation_summary.png)")
 pd.DataFrame(

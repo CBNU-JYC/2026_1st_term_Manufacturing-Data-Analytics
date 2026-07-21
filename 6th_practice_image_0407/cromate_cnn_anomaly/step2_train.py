@@ -36,7 +36,7 @@ def train_model():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"사용 디바이스: {device}")
     base_dir = Path(__file__).resolve().parent
-    results_dir = base_dir / "results"
+    results_dir = base_dir / "0_result"
     results_dir.mkdir(exist_ok=True)
 
     # 가이드북 기준: 256x256 리사이즈 및 정규화
@@ -73,7 +73,7 @@ def train_model():
         print(f"Epoch [{epoch+1}/{epochs}], Loss: {avg_loss:.4f}")
 
     # 모델 저장
-    model_path = base_dir / 'cnn_model.pth'
+    model_path = results_dir / 'cnn_model.pth'
     torch.save(model.state_dict(), model_path)
     print(f">>> 학습 완료! '{model_path.name}' 저장 완료.")
     history_path = results_dir / "step2_train_history.json"

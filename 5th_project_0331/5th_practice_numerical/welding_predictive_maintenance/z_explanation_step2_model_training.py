@@ -4,10 +4,12 @@ from torch.utils.data import DataLoader, TensorDataset  # 데이터를 배치 �
 from pathlib import Path  # 현재 스크립트 폴더 기준으로 파일을 읽고 쓰기 위해 사용합니다.
 
 BASE_DIR = Path(__file__).resolve().parent  # 이 스크립트가 있는 폴더의 실제 경로를 구합니다.
+RESULTS_DIR = BASE_DIR / "0_result"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # 1. 저장된 데이터 로딩
 print("데이터를 불러옵니다...", flush=True)  # 데이터 로딩이 시작되었음을 즉시 출력합니다.
-dataset = torch.load(BASE_DIR / 'processed_dataset.pt', weights_only=False)  # 전처리 단계에서 저장한 데이터셋 파일을 읽습니다.
+dataset = torch.load(RESULTS_DIR / 'processed_dataset.pt', weights_only=False)  # 전처리 단계에서 저장한 데이터셋 파일을 읽습니다.
 X_train, Y_train = dataset['X_train'], dataset['Y_train']  # 학습용 입력과 정답 시퀀스를 꺼냅니다.
 X_valid_0, Y_valid_0 = dataset['X_valid_0'], dataset['Y_valid_0']  # 정상 데이터만으로 만든 검증셋을 꺼냅니다.
 
@@ -98,7 +100,7 @@ for epoch in range(epochs):  # 전체 에폭 수만큼 학습을 반복합니다
     if avg_valid_loss < best_val_loss - 0.00001:  # 현재 검증 손실이 이전 최고 기록보다 충분히 좋아졌는지 확인합니다.
         best_val_loss = avg_valid_loss  # 가장 좋은 검증 손실 값을 갱신합니다.
         patience_counter = 0  # 성능이 좋아졌으므로 참을 횟수 카운터를 다시 0으로 리셋합니다.
-        torch.save(model.state_dict(), BASE_DIR / 'best_lstm_ae.pth')  # 현재까지 가장 좋은 모델 가중치를 파일로 저장합니다.
+        torch.save(model.state_dict(), RESULTS_DIR / 'best_lstm_ae.pth')  # 현재까지 가장 좋은 모델 가중치를 파일로 저장합니다.
     else:
         patience_counter += 1  # 성능 향상이 없으면 기다린 횟수를 1 증가시킵니다.
         if patience_counter >= early_stop_patience:  # 더 이상 기다릴 한계를 넘었는지 확인합니다.

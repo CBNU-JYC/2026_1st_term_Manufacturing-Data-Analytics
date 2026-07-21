@@ -59,18 +59,18 @@ def explain_decision_path(model, sample_X, feature_names):
 print("저장된 모델과 테스트 데이터를 불러옵니다...")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-VIS_DIR = os.path.join(BASE_DIR, "visualizations")
-RESULTS_DIR = os.path.join(BASE_DIR, "results")
+VIS_DIR = os.path.join(BASE_DIR, "0_result")
+RESULTS_DIR = os.path.join(BASE_DIR, "0_result")
 os.makedirs(VIS_DIR, exist_ok=True)
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 try:
-    Dtc_loaded = joblib.load(os.path.join(BASE_DIR, 'dtc_sound_model.pkl'))
-    X_test = pd.read_csv(os.path.join(BASE_DIR, 'X_test.csv'))
-    y_test = pd.read_csv(os.path.join(BASE_DIR, 'y_test.csv'))['NG']
+    Dtc_loaded = joblib.load(os.path.join(RESULTS_DIR, 'dtc_sound_model.pkl'))
+    X_test = pd.read_csv(os.path.join(RESULTS_DIR, 'X_test.csv'))
+    y_test = pd.read_csv(os.path.join(RESULTS_DIR, 'y_test.csv'))['NG']
 
     test_filepaths = None
-    test_filepaths_path = os.path.join(BASE_DIR, 'test_filepaths.csv')
+    test_filepaths_path = os.path.join(RESULTS_DIR, 'test_filepaths.csv')
     if os.path.exists(test_filepaths_path):
         test_filepaths = pd.read_csv(test_filepaths_path)['filepath']
         

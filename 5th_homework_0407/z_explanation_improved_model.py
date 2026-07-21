@@ -37,20 +37,23 @@ MPL_CONFIG_DIR = BASE_DIR / '.matplotlib'
 # 글꼴 같은 캐시 파일을 저장할 폴더 경로입니다.
 CACHE_DIR = BASE_DIR / '.cache'
 
+# 실행 결과를 모아둘 폴더 경로입니다.
+RESULT_DIR = BASE_DIR / '0_result'
+
 # 읽어올 원본 데이터 파일 경로입니다.
 DATA_PATH = BASE_DIR / 'ai4i2020.csv'
 
 # 학습 중 가장 좋았던 모델을 저장할 파일 경로입니다.
-BEST_MODEL_PATH = BASE_DIR / 'best_improved_model.pth'
+BEST_MODEL_PATH = RESULT_DIR / 'best_improved_model.pth'
 
 # 평가 그래프 그림을 저장할 파일 경로입니다.
-FIGURE_PATH = BASE_DIR / 'evaluation_result.png'
+FIGURE_PATH = RESULT_DIR / 'evaluation_result.png'
 
 # 모델과 스케일러를 저장할 폴더 경로입니다.
-MODEL_DIR = BASE_DIR / 'models'
+MODEL_DIR = RESULT_DIR / 'models'
 
 # 숫자 결과를 따로 정리해서 저장할 JSON 파일 경로입니다.
-RESULTS_PATH = BASE_DIR / 'results.json'
+RESULTS_PATH = RESULT_DIR / 'results.json'
 
 # Matplotlib가 설정 파일을 이 폴더에 저장하도록 환경 변수를 정합니다.
 os.environ.setdefault('MPLCONFIGDIR', str(MPL_CONFIG_DIR))
@@ -121,6 +124,9 @@ MPL_CONFIG_DIR.mkdir(exist_ok=True)
 
 # 캐시 폴더가 없으면 새로 만듭니다.
 CACHE_DIR.mkdir(exist_ok=True)
+
+# 결과 폴더가 없으면 새로 만듭니다.
+RESULT_DIR.mkdir(parents=True, exist_ok=True)
 
 # `imblearn`이 설치되어 있다면 SMOTE를 사용해 더 똑똑한 오버샘플링을 합니다.
 # 없으면 프로그램이 멈추지 않게 `try-except`로 안전하게 처리합니다.

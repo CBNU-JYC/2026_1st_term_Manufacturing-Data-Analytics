@@ -5,6 +5,8 @@ from sklearn.preprocessing import MinMaxScaler  # 데이터를 0~1 범위로 정
 from pathlib import Path  # 현재 스크립트 파일의 폴더 위치를 안정적으로 찾기 위해 사용합니다.
 
 BASE_DIR = Path(__file__).resolve().parent  # 이 파이썬 파일이 들어 있는 실제 폴더 경로를 구합니다.
+RESULTS_DIR = BASE_DIR / "0_result"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 print("1. 데이터 로딩 중...", flush=True)  # 현재 어떤 단계가 실행 중인지 화면에 바로 출력합니다.
 normal = pd.read_csv(BASE_DIR / 'normal_data.csv', index_col=0)  # 정상 데이터 CSV를 읽고, 첫 번째 열은 인덱스로 사용합니다.
@@ -87,5 +89,5 @@ torch.save({  # 여러 배열을 하나의 사전 형태로 묶어 `.pt` 파일�
     'X_valid_0': torch.FloatTensor(X_valid_0), 'Y_valid_0': torch.FloatTensor(Y_valid_0),  # 정상 검증셋을 텐서로 저장합니다.
     'X_valid': torch.FloatTensor(X_valid), 'Y_valid': torch.FloatTensor(Y_valid), 'Y_val_index': Y_val_index,  # 전체 검증셋과 라벨을 저장합니다.
     'X_test': torch.FloatTensor(X_test), 'Y_test': torch.FloatTensor(Y_test), 'Y_te_index': Y_te_index  # 전체 테스트셋과 라벨을 저장합니다.
-}, BASE_DIR / 'processed_dataset.pt')  # 저장 위치는 현재 스크립트와 같은 폴더입니다.
+}, RESULTS_DIR / 'processed_dataset.pt')  # 저장 위치는 현재 스크립트와 같은 폴더입니다.
 print("데이터셋 준비 완료! (processed_dataset.pt 생성)", flush=True)  # 전처리 완료 메시지를 바로 출력합니다.

@@ -20,7 +20,7 @@ from simple_vision import Compose, Resize, ToTensor
 
 configure_korean_font()
 
-RESULTS_DIR = base_dir / "results"
+RESULTS_DIR = base_dir / "0_result"
 RESULTS_DIR.mkdir(exist_ok=True)
 
 # --- Grad-CAM 구현 클래스 ---
@@ -158,7 +158,7 @@ if __name__ == '__main__':
     # TARGET_IMAGE = './data/평가/sample_ok.png' 
     TARGET_IMAGE = base_dir / 'data' / '테스트' / '불량' / 'KEMP_IMG_DATA_Error_55.png'
 
-    MODEL_PATH = base_dir / 'cnn_model.pth'
+    MODEL_PATH = RESULTS_DIR / 'cnn_model.pth'
     CLASSES = ['불량', '정상'] 
     
     predict_single_image_with_cam(TARGET_IMAGE, MODEL_PATH, CLASSES)

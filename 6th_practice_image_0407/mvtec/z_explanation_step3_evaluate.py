@@ -15,6 +15,8 @@ from pathlib import Path
 
 # 현재 설명 파일이 있는 폴더를 기준 경로로 저장합니다.
 base_dir = Path(__file__).resolve().parent
+RESULTS_DIR = base_dir / "0_result"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Matplotlib 설정 파일과 캐시 폴더를 프로젝트 안으로 정합니다.
 os.environ.setdefault("MPLCONFIGDIR", str(base_dir / ".mplconfig"))
@@ -244,7 +246,7 @@ if __name__ == "__main__":
 
     # 사용할 카테고리와 모델 파일 경로를 정합니다.
     CATEGORY = "bottle"
-    MODEL_PATH = base_dir / "autoencoder_model.pth"
+    MODEL_PATH = RESULTS_DIR / "autoencoder_model.pth"
 
     # 이미지 전처리를 준비합니다.
     transform = Compose([Resize((256, 256)), ToTensor()])

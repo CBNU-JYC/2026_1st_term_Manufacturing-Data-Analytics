@@ -28,7 +28,7 @@ class ConvAutoencoder(nn.Module):
 
 if __name__ == "__main__":
     base_dir = Path(__file__).resolve().parent
-    results_dir = base_dir / "results"
+    results_dir = base_dir / "0_result"
     results_dir.mkdir(exist_ok=True)
     ROOT_DIR = resolve_data_dir(base_dir)
     CATEGORY = 'bottle' 
@@ -68,7 +68,7 @@ if __name__ == "__main__":
             print(f'Epoch [{epoch+1}/{NUM_EPOCHS}], Loss: {avg_loss:.4f}')
 
     # 학습된 모델 가중치 저장
-    SAVE_PATH = base_dir / 'autoencoder_model.pth'
+    SAVE_PATH = results_dir / 'autoencoder_model.pth'
     torch.save(model.state_dict(), SAVE_PATH)
     print(f"모델 저장 완료: {SAVE_PATH}")
     history_path = results_dir / "step2_train_history.json"

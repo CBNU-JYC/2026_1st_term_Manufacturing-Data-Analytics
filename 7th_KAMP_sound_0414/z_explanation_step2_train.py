@@ -96,7 +96,7 @@ def mk_Frequency(y, sr):
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # 현재 코드 파일의 폴더입니다.
-RESULTS_DIR = os.path.join(BASE_DIR, "results")  # 결과 파일을 모아둘 폴더입니다.
+RESULTS_DIR = os.path.join(BASE_DIR, "0_result")  # 결과 파일을 모아둘 폴더입니다.
 os.makedirs(RESULTS_DIR, exist_ok=True)  # 결과 폴더가 없으면 만듭니다.
 
 ok_path = os.path.join(BASE_DIR, 'FAN_sound_OK', '*')  # 정상 소리 파일을 찾을 경로 규칙입니다.
@@ -155,16 +155,16 @@ test_filepaths = X_test['filepath']  # 테스트 파일 경로는 따로 보관�
 X_train = X_train.drop(columns=['filepath'])  # 파일 경로는 숫자 특징이 아니므로 학습에서 뺍니다.
 X_test = X_test.drop(columns=['filepath'])  # 테스트 입력에서도 파일 경로를 뺍니다.
 
-X_test.to_csv(os.path.join(BASE_DIR, 'X_test.csv'), index=False)  # 평가 단계에서 쓸 테스트 입력을 저장합니다.
-y_test.to_csv(os.path.join(BASE_DIR, 'y_test.csv'), index=False)  # 평가 단계에서 쓸 테스트 정답을 저장합니다.
-test_filepaths.to_csv(os.path.join(BASE_DIR, 'test_filepaths.csv'), index=False)  # 오분류 분석에 쓸 파일 경로를 저장합니다.
+X_test.to_csv(os.path.join(RESULTS_DIR, 'X_test.csv'), index=False)  # 평가 단계에서 쓸 테스트 입력을 저장합니다.
+y_test.to_csv(os.path.join(RESULTS_DIR, 'y_test.csv'), index=False)  # 평가 단계에서 쓸 테스트 정답을 저장합니다.
+test_filepaths.to_csv(os.path.join(RESULTS_DIR, 'test_filepaths.csv'), index=False)  # 오분류 분석에 쓸 파일 경로를 저장합니다.
 print("테스트 데이터(X_test.csv, y_test.csv, test_filepaths.csv)를 성공적으로 저장했습니다.")  # 저장 완료를 알려줍니다.
 
 print("의사결정나무 모델 학습을 시작합니다...")  # 모델 학습 시작을 알려줍니다.
 Dtc = DecisionTreeClassifier(criterion='entropy', max_depth=3, random_state=0)  # 질문을 최대 3단계만 하는 단순한 나무 모델을 만듭니다.
 Dtc.fit(X_train, y_train)  # 학습 데이터로 정상과 이상을 구분하는 규칙을 배웁니다.
 
-joblib.dump(Dtc, os.path.join(BASE_DIR, 'dtc_sound_model.pkl'))  # 학습된 모델을 파일로 저장합니다.
+joblib.dump(Dtc, os.path.join(RESULTS_DIR, 'dtc_sound_model.pkl'))  # 학습된 모델을 파일로 저장합니다.
 print("모델이 'dtc_sound_model.pkl' 이름으로 성공적으로 저장되었습니다!")  # 저장 완료를 알려줍니다.
 with open(os.path.join(RESULTS_DIR, "step2_train_summary.json"), "w", encoding="utf-8") as f:  # 학습 요약 파일을 엽니다.
     json.dump(

@@ -7,7 +7,7 @@ os.environ.setdefault("MPLCONFIGDIR", str(BASE_DIR / ".matplotlib"))
 os.environ.setdefault("XDG_CACHE_HOME", str(BASE_DIR / ".cache"))
 Path(os.environ["MPLCONFIGDIR"]).mkdir(parents=True, exist_ok=True)
 Path(os.environ["XDG_CACHE_HOME"]).mkdir(parents=True, exist_ok=True)
-RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR = BASE_DIR / "0_result"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 import torch
@@ -43,13 +43,13 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 print("1. 데이터 및 모델 로딩 중...", flush=True)
 # 보안 경고 해결을 위해 weights_only=False 적용
-dataset = torch.load(BASE_DIR / 'processed_dataset.pt', weights_only=False)
+dataset = torch.load(RESULTS_DIR / 'processed_dataset.pt', weights_only=False)
 X_valid, Y_valid, Y_val_index = dataset['X_valid'], dataset['Y_valid'], dataset['Y_val_index']
 X_test, Y_test, Y_te_index = dataset['X_test'], dataset['Y_test'], dataset['Y_te_index']
 
 model = LSTM_AE(n_features=5, seq_len=20).to(device)
 # 가중치 파일 로딩
-model.load_state_dict(torch.load(BASE_DIR / 'best_lstm_ae.pth', weights_only=True))
+model.load_state_dict(torch.load(RESULTS_DIR / 'best_lstm_ae.pth', weights_only=True))
 model.eval()
 
 def flatten_last_step(X):
@@ -88,7 +88,7 @@ plt.ylabel('Score')
 plt.legend()
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
-plt.savefig(BASE_DIR / 'precision_recall_threshold.png', dpi=150)
+plt.savefig(RESULTS_DIR / 'precision_recall_threshold.png', dpi=150)
 plt.close()
 
 # ---------------------------------------------------------
@@ -151,7 +151,7 @@ plt.ylabel('Reconstruction Error (MSE)')
 plt.legend()
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
-plt.savefig(BASE_DIR / 'reconstruction_error_scatter.png', dpi=150)
+plt.savefig(RESULTS_DIR / 'reconstruction_error_scatter.png', dpi=150)
 plt.close()
 
 # [시각화 3] 재구성 오차 분포 (Histogram/Density) 
@@ -164,7 +164,7 @@ plt.xlabel('Reconstruction Error (MSE)')
 plt.ylabel('Density')
 plt.legend()
 plt.tight_layout()
-plt.savefig(BASE_DIR / 'reconstruction_error_distribution.png', dpi=150)
+plt.savefig(RESULTS_DIR / 'reconstruction_error_distribution.png', dpi=150)
 plt.close()
 
 # [시각화 4] 오차 행렬 (Confusion Matrix) 
@@ -176,7 +176,7 @@ plt.title('Confusion Matrix of LSTM-AE', fontsize=14)
 plt.xticks([0.5, 1.5], ['Normal (0)', 'Anomaly (1)'])
 plt.yticks([0.5, 1.5], ['Normal (0)', 'Anomaly (1)'])
 plt.tight_layout()
-plt.savefig(BASE_DIR / 'confusion_matrix.png', dpi=150)
+plt.savefig(RESULTS_DIR / 'confusion_matrix.png', dpi=150)
 plt.close()
 
 print("평가 완료! 결과 이미지 4개가 저장되었습니다.", flush=True)

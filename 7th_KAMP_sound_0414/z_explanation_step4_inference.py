@@ -70,7 +70,7 @@ except ModuleNotFoundError as exc:  # librosa가 없으면 설치 안내를 보�
 
 warnings.filterwarnings('ignore')  # 실습 중 불필요한 경고를 숨깁니다.
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # 현재 코드가 있는 폴더입니다.
-RESULTS_DIR = os.path.join(BASE_DIR, "results")  # 추론 결과를 저장할 폴더입니다.
+RESULTS_DIR = os.path.join(BASE_DIR, "0_result")  # 추론 결과를 저장할 폴더입니다.
 os.makedirs(RESULTS_DIR, exist_ok=True)  # 결과 폴더가 없으면 만듭니다.
 
 
@@ -111,7 +111,7 @@ def predict_fan_status(audio_path, model_path=None):
     print(f"[{audio_path}] 파일 분석을 시작합니다...")  # 어떤 파일을 분석하는지 알려줍니다.
 
     if model_path is None:  # 모델 경로를 따로 주지 않았다면 기본 경로를 씁니다.
-        model_path = os.path.join(BASE_DIR, 'dtc_sound_model.pkl')  # Step 2에서 저장한 모델 경로입니다.
+        model_path = os.path.join(RESULTS_DIR, 'dtc_sound_model.pkl')  # Step 2에서 저장한 모델 경로입니다.
 
     if not os.path.isabs(audio_path):  # 오디오 경로가 절대 경로가 아니면 현재 폴더 기준으로 바꿉니다.
         audio_path = os.path.join(BASE_DIR, audio_path)  # 상대 경로를 절대 경로처럼 사용할 수 있게 합칩니다.

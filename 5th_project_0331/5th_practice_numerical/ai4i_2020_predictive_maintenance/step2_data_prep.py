@@ -8,7 +8,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader, WeightedRandomSampler
 
 BASE_DIR = Path(__file__).resolve().parent
-RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR = BASE_DIR / "0_result"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 print("라이브러리 로드 완료")
 

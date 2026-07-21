@@ -6,12 +6,12 @@ import pandas as pd
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR = BASE_DIR / "0_result"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # 1. 저장된 데이터 로딩
 print("데이터를 불러옵니다...", flush=True)
-dataset = torch.load(BASE_DIR / 'processed_dataset.pt', weights_only=False)
+dataset = torch.load(RESULTS_DIR / 'processed_dataset.pt', weights_only=False)
 X_train, Y_train = dataset['X_train'], dataset['Y_train']
 X_valid_0, Y_valid_0 = dataset['X_valid_0'], dataset['Y_valid_0']
 
@@ -100,7 +100,7 @@ for epoch in range(epochs):
     if avg_valid_loss < best_val_loss - 0.00001:
         best_val_loss = avg_valid_loss
         patience_counter = 0
-        torch.save(model.state_dict(), BASE_DIR / 'best_lstm_ae.pth') # 최고 성능 모델 저장
+        torch.save(model.state_dict(), RESULTS_DIR / 'best_lstm_ae.pth') # 최고 성능 모델 저장
     else:
         patience_counter += 1
         if patience_counter >= early_stop_patience:

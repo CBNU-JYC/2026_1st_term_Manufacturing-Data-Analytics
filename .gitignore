@@ -6,4 +6,21 @@ __pycache__/
 .matplotlib/
 .vscode/
 .idea/
+.venv/
 6th_practice_image_0407/cromate_cnn_anomaly/cnn_model.pth
+5th_project_0331/5th_practice_numerical/welding_predictive_maintenance/processed_dataset.pt
+
+# Exclude files larger than 10MB
+*.wav
+*.mp3
+*.mp4
+*.avi
+*.mov
+7th_KAMP_sound_0414/FAN_sound_error/
+7th_KAMP_sound_0414/FAN_sound_OK/
+7th_MIMII_sound_0414/
+12th_termproject/
+0_Termproject/
+6th_practice_image_0407/mvtec/
+6th_homework_0421/mvtec/
+5th_homework_0421/models/

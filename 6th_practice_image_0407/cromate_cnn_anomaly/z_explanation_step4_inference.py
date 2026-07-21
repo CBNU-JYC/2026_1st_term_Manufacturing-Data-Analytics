@@ -18,6 +18,8 @@ from pathlib import Path
 
 # 현재 설명 파일이 있는 폴더를 기준 경로로 저장합니다.
 base_dir = Path(__file__).resolve().parent
+RESULTS_DIR = base_dir / "0_result"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Matplotlib 설정 폴더를 프로젝트 안으로 정해 둡니다.
 os.environ.setdefault("MPLCONFIGDIR", str(base_dir / ".mplconfig"))
@@ -269,7 +271,7 @@ if __name__ == "__main__":
     TARGET_IMAGE = base_dir / "data" / "테스트" / "불량" / "KEMP_IMG_DATA_Error_55.png"
 
     # 불러올 모델 파일 경로를 정합니다.
-    MODEL_PATH = base_dir / "cnn_model.pth"
+    MODEL_PATH = RESULTS_DIR / "cnn_model.pth"
 
     # 클래스 이름 순서를 정합니다.
     CLASSES = ["불량", "정상"]

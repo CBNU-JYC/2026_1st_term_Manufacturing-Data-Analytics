@@ -1,3 +1,7 @@
+from pathlib import Path
+
+RESULT_DIR = Path(__file__).resolve().parent / "0_result"
+RESULT_DIR.mkdir(parents=True, exist_ok=True)
 """
 이 파일은 `opc_client_mfg.py`를 자세히 설명한 학습용 버전입니다.
 
@@ -75,7 +79,7 @@ async def main():
         df = pd.DataFrame(collected_data)
 
         # 5. CSV 파일로 저장
-        csv_filename = "manufacturing_sensor_data.csv"
+        csv_filename = RESULT_DIR / "manufacturing_sensor_data.csv"
         df.to_csv(csv_filename, index=False, encoding="utf-8-sig")
 
         print(f"\n데이터 수집 완료! '{csv_filename}' 파일이 성공적으로 생성되었습니다.")

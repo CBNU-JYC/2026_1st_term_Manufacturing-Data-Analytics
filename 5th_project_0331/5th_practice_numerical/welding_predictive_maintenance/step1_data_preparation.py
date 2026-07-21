@@ -6,7 +6,7 @@ from sklearn.preprocessing import MinMaxScaler
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR = BASE_DIR / "0_result"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 print("1. 데이터 로딩 중...", flush=True)
@@ -88,7 +88,7 @@ torch.save({
     'X_valid_0': torch.FloatTensor(X_valid_0), 'Y_valid_0': torch.FloatTensor(Y_valid_0),
     'X_valid': torch.FloatTensor(X_valid), 'Y_valid': torch.FloatTensor(Y_valid), 'Y_val_index': Y_val_index,
     'X_test': torch.FloatTensor(X_test), 'Y_test': torch.FloatTensor(Y_test), 'Y_te_index': Y_te_index
-}, BASE_DIR / 'processed_dataset.pt')
+}, RESULTS_DIR / 'processed_dataset.pt')
 print("데이터셋 준비 완료! (processed_dataset.pt 생성)", flush=True)
 
 summary = {

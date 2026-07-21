@@ -17,7 +17,7 @@ from step1_data_eda import MVTecDataset
 from step2_train import ConvAutoencoder
 from simple_vision import Compose, Resize, ToTensor, resolve_data_dir
 
-RESULTS_DIR = base_dir / "results"
+RESULTS_DIR = base_dir / "0_result"
 RESULTS_DIR.mkdir(exist_ok=True)
 
 
@@ -153,7 +153,7 @@ def visualize_anomaly(model, test_loader, device, threshold, num_samples=3):
 if __name__ == "__main__":
     ROOT_DIR = resolve_data_dir(base_dir)
     CATEGORY = 'bottle' 
-    MODEL_PATH = base_dir / 'autoencoder_model.pth'
+    MODEL_PATH = RESULTS_DIR / 'autoencoder_model.pth'
 
     transform = Compose([Resize((256, 256)), ToTensor()])
 

@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR = BASE_DIR / "0_result"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 print("실시간 추론(Inference) 환경 준비 중...")
@@ -40,8 +40,8 @@ class FaultDiagnosisMLP(nn.Module):
         return self.network(x)
 
 # 파일 경로 설정 (train_model.py에서 저장한 경로와 일치)
-model_path = BASE_DIR / 'models' / 'fault_diagnosis_mlp.pth'
-scaler_path = BASE_DIR / 'models' / 'sensor_scaler.pkl'
+model_path = RESULTS_DIR / 'models' / 'fault_diagnosis_mlp.pth'
+scaler_path = RESULTS_DIR / 'models' / 'sensor_scaler.pkl'
 
 # 1. 스케일러 로드
 try:

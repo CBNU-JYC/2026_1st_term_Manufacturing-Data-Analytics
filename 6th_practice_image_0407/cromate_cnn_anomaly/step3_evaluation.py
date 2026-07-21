@@ -22,7 +22,7 @@ from simple_vision import Compose, Resize, SimpleImageFolder, ToTensor
 
 configure_korean_font()
 
-RESULTS_DIR = base_dir / "results"
+RESULTS_DIR = base_dir / "0_result"
 RESULTS_DIR.mkdir(exist_ok=True)
 
 def evaluate_model():
@@ -37,7 +37,7 @@ def evaluate_model():
 
     # 모델 불러오기
     model = SimpleCNN().to(device)
-    model.load_state_dict(torch.load(base_dir / 'cnn_model.pth', map_location=device))
+    model.load_state_dict(torch.load(RESULTS_DIR / 'cnn_model.pth', map_location=device))
     model.eval()
 
     y_true, y_pred, y_scores = [], [], []

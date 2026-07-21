@@ -4,6 +4,10 @@ import numpy as np
 from asyncua import Client
 from datetime import datetime
 import random
+from pathlib import Path
+
+RESULT_DIR = Path(__file__).resolve().parent / "0_result"
+RESULT_DIR.mkdir(parents=True, exist_ok=True)
 
 async def main():
     url = "opc.tcp://127.0.0.1:4840/freeopcua/server/"
@@ -95,7 +99,7 @@ async def main():
     print("-" * 30)
 
     # 최종 데이터셋 저장
-    final_filename = "lifecycle_optimized_dataset.csv"
+    final_filename = RESULT_DIR / "lifecycle_optimized_dataset.csv"
     df_clean.to_csv(final_filename, index=False, encoding='utf-8-sig')
     print(f"\n모든 파이프라인 완료! 최종 데이터셋이 '{final_filename}'로 저장되었습니다.")
 

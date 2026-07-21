@@ -8,6 +8,8 @@ import os  # 현재 파일에서는 직접 사용이 크지 않지만 운영체�
 from pathlib import Path  # 현재 스크립트 기준 경로를 만들기 위해 사용합니다.
 
 BASE_DIR = Path(__file__).resolve().parent  # 이 파이썬 파일이 있는 폴더 경로를 구합니다.
+RESULTS_DIR = BASE_DIR / "0_result"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 print("실시간 추론(Inference) 환경 준비 중...")  # 추론 준비 시작 메시지를 출력합니다.
 
@@ -38,8 +40,8 @@ class FaultDiagnosisMLP(nn.Module):  # 학습 때 사용한 MLP 구조를 그대
 
 
 # 파일 경로 설정 (train_model.py에서 저장한 경로와 일치)
-model_path = BASE_DIR / 'models' / 'fault_diagnosis_mlp.pth'  # 저장된 모델 가중치 파일 경로입니다.
-scaler_path = BASE_DIR / 'models' / 'sensor_scaler.pkl'  # 저장된 스케일러 파일 경로입니다.
+model_path = RESULTS_DIR / 'models' / 'fault_diagnosis_mlp.pth'  # 저장된 모델 가중치 파일 경로입니다.
+scaler_path = RESULTS_DIR / 'models' / 'sensor_scaler.pkl'  # 저장된 스케일러 파일 경로입니다.
 
 # 1. 스케일러 로드
 try:

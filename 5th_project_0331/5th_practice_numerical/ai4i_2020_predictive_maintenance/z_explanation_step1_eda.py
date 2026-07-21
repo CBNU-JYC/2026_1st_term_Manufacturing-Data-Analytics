@@ -4,6 +4,8 @@ import numpy as np  # 수치 계산용 라이브러리입니다. 이 파일에�
 from pathlib import Path  # 현재 스크립트 위치를 기준으로 안정적인 경로를 만들기 위해 사용합니다.
 
 BASE_DIR = Path(__file__).resolve().parent  # 이 파이썬 파일이 들어 있는 실제 폴더 경로를 구합니다.
+RESULTS_DIR = BASE_DIR / "0_result"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 os.environ.setdefault("MPLCONFIGDIR", str(BASE_DIR / ".matplotlib"))  # matplotlib 캐시 폴더를 현재 프로젝트 폴더 안으로 지정합니다.
 os.environ.setdefault("XDG_CACHE_HOME", str(BASE_DIR / ".cache"))  # 글꼴 캐시 등도 현재 프로젝트 폴더 안으로 지정합니다.
 (BASE_DIR / ".matplotlib").mkdir(parents=True, exist_ok=True)  # matplotlib 캐시 폴더가 없으면 자동으로 만듭니다.
@@ -42,7 +44,7 @@ for i, col in enumerate(sensor_cols):  # 센서 변수들을 순서대로 꺼내
 # 남는 그래프 공간 숨기기
 axes[5].set_visible(False)  # 6칸 중 마지막 한 칸은 사용하지 않으므로 보이지 않게 합니다.
 plt.tight_layout()  # 그래프 간 간격을 자동으로 정리합니다.
-plt.savefig(BASE_DIR / 'eda_sensor_distributions.png', dpi=150)  # 센서 분포 그래프를 PNG 파일로 저장합니다.
+plt.savefig(RESULTS_DIR / 'eda_sensor_distributions.png', dpi=150)  # 센서 분포 그래프를 PNG 파일로 저장합니다.
 plt.close()  # 현재 그래프 객체를 닫아 메모리를 정리합니다.
 
 # 센서 변수들 간의 피어슨 상관계수 계산
@@ -52,7 +54,7 @@ plt.figure(figsize=(8, 6))  # 상관계수 히트맵용 새 그림 크기를 지
 sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1, fmt=".2f")  # 상관계수를 색상과 숫자로 같이 보여주는 히트맵을 그립니다.
 plt.title('Correlation Matrix of Sensor Variables')  # 히트맵 제목을 지정합니다.
 plt.tight_layout()  # 여백을 정리합니다.
-plt.savefig(BASE_DIR / 'eda_correlation_matrix.png', dpi=150)  # 상관계수 히트맵을 PNG로 저장합니다.
+plt.savefig(RESULTS_DIR / 'eda_correlation_matrix.png', dpi=150)  # 상관계수 히트맵을 PNG로 저장합니다.
 plt.close()  # 그래프 객체를 닫습니다.
 
 # Machine failure (0: 정상, 1: 고장) 분포 확인
@@ -66,7 +68,7 @@ plt.figure(figsize=(6, 4))  # 타깃 분포 막대그래프용 그림 크기를 
 sns.countplot(data=df, x='Machine failure', hue='Machine failure', palette='Set2', legend=False)  # 정상과 고장 개수를 막대그래프로 그립니다.
 plt.title('Distribution of Target Variable (Machine failure)')  # 그래프 제목을 지정합니다.
 plt.tight_layout()  # 여백을 정리합니다.
-plt.savefig(BASE_DIR / 'eda_target_distribution.png', dpi=150)  # 타깃 분포 그래프를 PNG 파일로 저장합니다.
+plt.savefig(RESULTS_DIR / 'eda_target_distribution.png', dpi=150)  # 타깃 분포 그래프를 PNG 파일로 저장합니다.
 plt.close()  # 그래프 객체를 닫습니다.
 
 # 세부 고장 유형 파악 (TWF, HDF, PWF, OSF, RNF)

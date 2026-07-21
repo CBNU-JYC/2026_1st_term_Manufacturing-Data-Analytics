@@ -15,8 +15,8 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'mps' if torch.ba
 print(f"학습 장치(Device) 설정 완료: {device}")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-VIS_DIR = os.path.join(BASE_DIR, "visualizations")
-RESULTS_DIR = os.path.join(BASE_DIR, "results")
+VIS_DIR = os.path.join(BASE_DIR, "0_result")
+RESULTS_DIR = os.path.join(BASE_DIR, "0_result")
 os.makedirs(VIS_DIR, exist_ok=True)
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
@@ -183,7 +183,7 @@ pd.DataFrame(
 ).to_csv(os.path.join(RESULTS_DIR, "step2_training_history.csv"), index=False)
 
 # %% [6] 모델 가중치 저장
-audio_models_dir = os.path.join(BASE_DIR, 'audio_models')
+audio_models_dir = os.path.join(RESULTS_DIR, 'audio_models')
 os.makedirs(audio_models_dir, exist_ok=True)
 model_path = os.path.join(audio_models_dir, 'audio_autoencoder_real.pth')
 torch.save(model.state_dict(), model_path)

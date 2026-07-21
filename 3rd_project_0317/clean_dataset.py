@@ -1,4 +1,10 @@
+from pathlib import Path
+
 import pandas as pd
+
+BASE_DIR = Path(__file__).resolve().parent
+RESULT_DIR = BASE_DIR / "0_result"
+RESULT_DIR.mkdir(parents=True, exist_ok=True)
 
 # 1. 실제 데이터 로드
 df = pd.read_csv('labeled_data.csv')
@@ -90,5 +96,6 @@ print(f" - 최종 확보 데이터: {len(df_clean)}건")
 print("=" * 60)
 
 # 정제된 데이터를 새로운 CSV 파일로 저장
-df_clean.to_csv('labeled_data_clean.csv', index=False)
-print("파일이 'labeled_data_clean.csv'로 성공적으로 저장되었습니다.")
+output_path = RESULT_DIR / 'labeled_data_clean.csv'
+df_clean.to_csv(output_path, index=False)
+print(f"파일이 '{output_path}'로 성공적으로 저장되었습니다.")

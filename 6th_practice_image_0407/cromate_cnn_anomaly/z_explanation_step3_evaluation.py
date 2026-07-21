@@ -17,6 +17,8 @@ from pathlib import Path
 
 # 현재 설명 파일이 있는 폴더를 기준 경로로 저장합니다.
 base_dir = Path(__file__).resolve().parent
+RESULTS_DIR = base_dir / "0_result"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Matplotlib 설정 파일을 저장할 폴더를 프로젝트 안으로 잡습니다.
 os.environ.setdefault("MPLCONFIGDIR", str(base_dir / ".mplconfig"))
@@ -79,7 +81,7 @@ def evaluate_model():
     model = SimpleCNN().to(device)
 
     # 저장된 가중치를 모델에 불러옵니다.
-    model.load_state_dict(torch.load(base_dir / "cnn_model.pth", map_location=device))
+    model.load_state_dict(torch.load(RESULTS_DIR / "cnn_model.pth", map_location=device))
 
     # 평가 모드로 바꿉니다.
     model.eval()

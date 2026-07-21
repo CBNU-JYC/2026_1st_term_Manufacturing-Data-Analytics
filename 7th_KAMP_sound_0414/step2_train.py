@@ -50,7 +50,7 @@ def mk_Frequency(y, sr):
     return haf_spectrum, haf_fre
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-RESULTS_DIR = os.path.join(BASE_DIR, "results")
+RESULTS_DIR = os.path.join(BASE_DIR, "0_result")
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 # 2. 데이터 경로 설정 및 특성 추출 (EDA 단계와 동일)
@@ -108,9 +108,9 @@ X_train = X_train.drop(columns=['filepath'])
 X_test = X_test.drop(columns=['filepath'])
 
 # 차후 평가 파일에서 사용하기 위해 테스트 데이터를 CSV로 저장합니다.
-X_test.to_csv(os.path.join(BASE_DIR, 'X_test.csv'), index=False)
-y_test.to_csv(os.path.join(BASE_DIR, 'y_test.csv'), index=False)
-test_filepaths.to_csv(os.path.join(BASE_DIR, 'test_filepaths.csv'), index=False)
+X_test.to_csv(os.path.join(RESULTS_DIR, 'X_test.csv'), index=False)
+y_test.to_csv(os.path.join(RESULTS_DIR, 'y_test.csv'), index=False)
+test_filepaths.to_csv(os.path.join(RESULTS_DIR, 'test_filepaths.csv'), index=False)
 print("테스트 데이터(X_test.csv, y_test.csv, test_filepaths.csv)를 성공적으로 저장했습니다.")
 
 # 4. 모델링 및 학습
@@ -119,7 +119,7 @@ Dtc = DecisionTreeClassifier(criterion='entropy', max_depth=3, random_state=0)
 Dtc.fit(X_train, y_train)
 
 # 5. 학습된 모델 저장 (.pkl 형식)
-joblib.dump(Dtc, os.path.join(BASE_DIR, 'dtc_sound_model.pkl'))
+joblib.dump(Dtc, os.path.join(RESULTS_DIR, 'dtc_sound_model.pkl'))
 print("모델이 'dtc_sound_model.pkl' 이름으로 성공적으로 저장되었습니다!")
 with open(os.path.join(RESULTS_DIR, "step2_train_summary.json"), "w", encoding="utf-8") as f:
     json.dump(

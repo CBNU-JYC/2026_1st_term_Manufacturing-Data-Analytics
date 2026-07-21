@@ -47,8 +47,8 @@ plt.rcParams['font.family'] = 'Malgun Gothic' # 한글 깨짐 방지
 plt.rcParams['axes.unicode_minus'] = False
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-VIS_DIR = os.path.join(BASE_DIR, "visualizations")
-RESULTS_DIR = os.path.join(BASE_DIR, "results")
+VIS_DIR = os.path.join(BASE_DIR, "0_result")
+RESULTS_DIR = os.path.join(BASE_DIR, "0_result")
 os.makedirs(VIS_DIR, exist_ok=True)
 os.makedirs(RESULTS_DIR, exist_ok=True)
 

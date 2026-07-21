@@ -23,11 +23,12 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 MPL_CONFIG_DIR = BASE_DIR / '.matplotlib'
 CACHE_DIR = BASE_DIR / '.cache'
+RESULT_DIR = BASE_DIR / '0_result'
 DATA_PATH = BASE_DIR / 'ai4i2020.csv'
-BEST_MODEL_PATH = BASE_DIR / 'best_improved_model.pth'
-FIGURE_PATH = BASE_DIR / 'evaluation_result.png'
-MODEL_DIR = BASE_DIR / 'models'
-RESULTS_PATH = BASE_DIR / 'results.json'
+BEST_MODEL_PATH = RESULT_DIR / 'best_improved_model.pth'
+FIGURE_PATH = RESULT_DIR / 'evaluation_result.png'
+MODEL_DIR = RESULT_DIR / 'models'
+RESULTS_PATH = RESULT_DIR / 'results.json'
 
 os.environ.setdefault('MPLCONFIGDIR', str(MPL_CONFIG_DIR))
 os.environ.setdefault('XDG_CACHE_HOME', str(CACHE_DIR))
@@ -54,6 +55,7 @@ import joblib
 warnings.filterwarnings("ignore")
 MPL_CONFIG_DIR.mkdir(exist_ok=True)
 CACHE_DIR.mkdir(exist_ok=True)
+RESULT_DIR.mkdir(parents=True, exist_ok=True)
 
 try:
     from imblearn.over_sampling import SMOTE

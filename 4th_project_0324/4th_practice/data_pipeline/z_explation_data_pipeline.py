@@ -1,3 +1,7 @@
+from pathlib import Path
+
+RESULT_DIR = Path(__file__).resolve().parent / "0_result"
+RESULT_DIR.mkdir(parents=True, exist_ok=True)
 """
 이 파일은 `data_pipeline.py`를 학습용으로 아주 자세히 풀어쓴 설명 버전입니다.
 
@@ -176,7 +180,7 @@ async def main():
     # 최종 데이터셋 저장
     # index=False: 왼쪽 인덱스 번호는 파일에 저장하지 않음
     # utf-8-sig: 엑셀에서 한글이 깨질 가능성을 줄이기 위한 인코딩
-    final_filename = "lifecycle_optimized_dataset.csv"
+    final_filename = RESULT_DIR / "lifecycle_optimized_dataset.csv"
     df_clean.to_csv(final_filename, index=False, encoding="utf-8-sig")
     print(f"\n모든 파이프라인 완료! 최종 데이터셋이 '{final_filename}'로 저장되었습니다.")
 

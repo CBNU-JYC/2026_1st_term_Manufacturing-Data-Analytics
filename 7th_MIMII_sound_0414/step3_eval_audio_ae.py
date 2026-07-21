@@ -12,7 +12,7 @@ import seaborn as sns
 from sklearn.metrics import roc_curve, auc
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-VIS_DIR = os.path.join(BASE_DIR, "visualizations")
+VIS_DIR = os.path.join(BASE_DIR, "0_result")
 os.makedirs(VIS_DIR, exist_ok=True)
 
 def save_current_figure(filename):
@@ -20,7 +20,7 @@ def save_current_figure(filename):
     plt.savefig(save_path, dpi=200, bbox_inches='tight')
     print(f"이미지 저장 완료: {save_path}")
 
-RESULTS_DIR = os.path.join(BASE_DIR, "results")
+RESULTS_DIR = os.path.join(BASE_DIR, "0_result")
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 # 모델 아키텍처 정의 (Step 2와 동일)
