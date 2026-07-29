@@ -11,6 +11,11 @@ __pycache__/
 5th_project_0331/5th_practice_numerical/welding_predictive_maintenance/processed_dataset.pt
 
 # Exclude files larger than 10MB
+1_수업자료/제조 데이터 분석과 최적화_통합.pdf
+1_수업자료/제조 데이터 분석과 최적화(3주차 - 제조데이터란).pdf
+1_수업자료/제조 데이터 분석과 최적화(4주차 - 제조데이터 수집 및 처리 방법).pdf
+1_수업자료/제조 데이터 분석과 최적화(5주차 - 제조 데이터 기반 AI 개발, 수치 데이터).pdf
+1_수업자료/제조 데이터 분석과 최적화(6주차 - 제조 데이터 기반 AI 개발(이미지 데이터).pdf
 *.wav
 *.mp3
 *.mp4
