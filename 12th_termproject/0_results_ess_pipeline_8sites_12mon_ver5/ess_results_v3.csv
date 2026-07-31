@@ -1,0 +1,8 @@
+﻿Site,BuildingType,Operation,CurrentSR(%),CurrentGrade,ZEB4ESS(kWh),ZEB3ESS(kWh),ZEB2ESS(kWh),ZEB1ESS(kWh),RefRange(kWh),InRefRange,Optuna(kWh)
+S1,Cultural,Irregular,9.6,5,200.0,-,-,-,50~150,No,200.0
+S2,Cultural,Regular,2.8,5,200.0,-,-,-,150~300,Yes,200.0
+S4,Admin.,Regular,18.5,5,200.0,-,-,-,50~150,No,200.0
+S5,Cultural,Irregular,28.1,5,60.0,-,-,-,50~150,Yes,80.0
+S6,Education,Regular+Vacation,0.0,5,200.0,-,-,-,150~300,Yes,200.0
+S7,Cultural,Irregular,0.3,5,200.0,-,-,-,50~150,No,200.0
+S8,Education,Regular+Vacation,0.1,5,200.0,-,-,-,150~300,Yes,200.0

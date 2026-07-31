@@ -41,6 +41,7 @@
 - 크로메이트 표면 이미지 기반 CNN 분류 실습
 - 팬(FAN) 사운드 기반 이상 탐지 실습
 - MIMII 밸브 사운드 기반 오토인코더 이상 탐지 실습
+- 8개 시설 에너지 데이터 품질 진단과 ESS 용량 최적화 텀프로젝트
 
 ## 프로젝트 구성
 
@@ -58,6 +59,7 @@
 | `6th_homework_0421/mvtec` | MVTec AD bottle 클래스 기반 CAE 성능 개선 과제 | `homework_code.py`, `homework_code_0.8630.py` | `outputs/metrics.json`, `outputs/curves.png`, `outputs/samples.png`, `outputs/best_cae.pth` |
 | `7th_KAMP_sound_0414` | 팬(FAN) 사운드 기반 이상 탐지 실습 | `step1_eda.py`, `step2_train.py`, `step3_evaluate.py`, `step4_inference.py` | `visualizations/`, `results/`, `dtc_sound_model.pkl` |
 | `7th_MIMII_sound_0414` | MIMII 밸브 사운드 기반 오토인코더 이상 탐지 실습 | `step1_eda_audio.py`, `step2_train_audio_ae.py`, `step3_eval_audio_ae.py`, `step4_inference_audio_ae.py` | `visualizations/`, `results/`, `audio_models/` |
+| `12th_termproject` | 8개 시설 에너지 데이터 기반 ESS 분석·최적화 텀프로젝트 최종본 | `ess_pipeline_8sites_12mon_ver5.py` | `0_results_ess_pipeline_8sites_12mon_ver5/` |
 
 ## 주요 과제 및 실습 요약
 
@@ -123,6 +125,14 @@
 - `step3_eval_audio_ae.py`는 복원 오차 분포, ROC-AUC, Confusion Matrix, 재구성 결과를 평가합니다.
 - `step4_inference_audio_ae.py`는 시간대별 anomaly score를 계산하고 `results/step4_inference_scores.csv`를 저장합니다.
 
+### 9. `12th_termproject`
+
+- 8개 시설의 월별 에너지 계측 데이터를 대상으로 데이터 품질을 진단하고 ESS 적용 가능성을 비교합니다.
+- GitHub에는 최종 코드 `2_8site_datasets_12(Claude)/ess_pipeline_8sites_12mon_ver5.py`와 최종 결과 `0_results_ess_pipeline_8sites_12mon_ver5/`만 저장합니다.
+- 최종 결과에는 시설별 Progressive ESS 분석 이미지, 시설 간 일반화 요약 이미지, 최종 요약 이미지와 CSV 결과가 포함됩니다.
+- 원천 데이터, 가상환경, 백업 및 이전 버전 코드·결과는 로컬에만 유지하며 Git 추적 대상에서 제외합니다.
+- 파일당 10MB 이상인 원천 데이터와 결과 파일은 GitHub에 저장하지 않으며 과거 Git 이력에서도 제거합니다.
+
 ## 빠른 시작
 
 ## 결과 저장 원칙
@@ -132,6 +142,8 @@
 - 산출물 파일명은 `주차_순서_내용_산출물종류` 형식을 사용합니다. 예: `11_7_main_compare_figure_01.png`
 - 리뷰가 쉽도록 실행 결과는 가능한 한 JSON보다 터미널에 출력된 내용을 그대로 담은 `.txt` 파일로 저장합니다.
 - CSV, PNG, 모델 파일 등 별도 산출물이 필요한 경우에도 코드와 섞이지 않도록 `0_result/`를 우선 사용합니다.
+- 파일 크기가 10MB 이상인 결과물과 원천 데이터는 Git 추적 대상에서 제외합니다.
+- Git 이력에도 10MB 이상인 객체가 남지 않도록 업로드 전 전체 이력을 검사합니다.
 
 ### 저장소 열기
 
@@ -306,6 +318,22 @@ python3 step4_inference_audio_ae.py
 - `visualizations/`에 EDA, 학습 곡선, 평가 그래프 저장
 - `results/step4_inference_scores.csv` 저장
 
+### 11. 8개 시설 ESS 텀프로젝트 실행
+
+최종 분석:
+
+```bash
+cd "12th_termproject/2_8site_datasets_12(Claude)"
+python ess_pipeline_8sites_12mon_ver5.py
+```
+
+실행 결과:
+
+- 시설별 데이터 품질·사용량·ESS 최적화 결과 생성
+- ESS 등급, 경제성, PV 확장 시나리오와 시설 간 일반화 비교 자료 생성
+- 최종 결과는 `12th_termproject/0_results_ess_pipeline_8sites_12mon_ver5/`에 저장
+- 최종 코드와 파일당 10MB 미만인 최종 결과만 GitHub 저장소에 포함
+
 ## 현재 저장소 구조
 
 ```text
@@ -346,6 +374,10 @@ ManDA_Lecture/
 │       ├── step2_train.py
 │       ├── step3_evaluate.py
 │       └── autoencoder_model.pth
+├── 12th_termproject/
+│   ├── 2_8site_datasets_12(Claude)/
+│   │   └── ess_pipeline_8sites_12mon_ver5.py
+│   └── 0_results_ess_pipeline_8sites_12mon_ver5/
 ├── secom_clean.csv
 ├── .gitignore
 └── README.md
@@ -356,6 +388,7 @@ ManDA_Lecture/
 - 설명용 파일(`Explain_*.py`, `z_explanation_*.py`)은 원본 코드 학습을 돕기 위한 주석 강화 버전입니다.
 - 생성 CSV는 실습 결과 확인과 후속 분석을 위해 저장소에 함께 보관합니다.
 - Python 캐시와 개발 환경 파일(`__pycache__`, `*.pyc`, `.cache/`, `.matplotlib/`, `.vscode/`, `.idea/`)은 버전 관리 대상에서 제외합니다.
+- 파일당 10MB 이상인 파일은 로컬에만 보관하고 현재 버전과 과거 Git 이력에서 모두 제외합니다.
 
 ## 설명용 코드 작성 지침
 
